@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import Classes.Pais;
-import Classes.Estado;
+import L4Q1.*;
 
 public class Main {
     public static void mostrarMenu() {

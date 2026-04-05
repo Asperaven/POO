@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
-import Classes.Concessionaria;
-import Classes.Veiculo;
+import L3Q2.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {

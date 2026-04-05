@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
-import classes.Empresa;
-import classes.Funcionario;
+import L3Q1.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {

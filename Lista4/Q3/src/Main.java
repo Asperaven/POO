@@ -1,5 +1,4 @@
-import Classes.Pedido;
-import Classes.Restaurante;
+import L4Q3.*;
 import java.util.Scanner;
 
 public class Main {

@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import Classes.Disciplina;
+import L3Q4.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {

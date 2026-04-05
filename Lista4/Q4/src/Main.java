@@ -1,5 +1,4 @@
-import Classes.Cruzamento;
-import Classes.Semaforo;
+import L4Q4.*;
 import java.util.Scanner;
 
 public class Main {

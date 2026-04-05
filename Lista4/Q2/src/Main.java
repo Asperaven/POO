@@ -1,5 +1,4 @@
-import Classes.Hotel;
-import Classes.Quarto;
+import L4Q2.*;
 import java.util.Scanner;
 
 public class Main {

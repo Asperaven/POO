@@ -1,5 +1,4 @@
-import Classes.CalendarioDeAniversarios;
-import Classes.Amigo;
+import L4Q5.*;
 import java.util.Scanner;
 
 public class Main {

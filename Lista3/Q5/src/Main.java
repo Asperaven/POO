@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import Classes.Datas;
+import L3Q5.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
