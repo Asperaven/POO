@@ -27,7 +27,7 @@ public class ListaDeEstabelecimentos {
     }
 
     public void definirDemanda(String demanda) {
-        if (demanda == "VIDRO" || demanda == "PAPELAO" || demanda == "METAL") {
+        if (demanda.equals("VIDRO") || demanda.equals("PAPELAO") || demanda.equals("METAL")) {
             this.demandaAtual = demanda;
             System.out.println("Demanda definida: " + demanda);
         } else {

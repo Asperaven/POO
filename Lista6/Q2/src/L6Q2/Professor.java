@@ -14,35 +14,31 @@ public class Professor extends Funcionario {
 
     @Override
     public void calcularSalario() {
-        switch (eCoordenador) {
-            case true:
-                if (titulacao.equalsIgnoreCase("Doutorado")) {
-                    int salarioPreBonus = 100 * cargaHoraria;
-                    setSalario(salarioPreBonus + (salarioPreBonus * 0.20));
-                    System.out.println("Salário calculado: " + getSalario());
-                } else if (titulacao.equalsIgnoreCase("Mestrado")) {
-                    int salarioPreBonus = 80 * cargaHoraria;
-                    setSalario(salarioPreBonus + (salarioPreBonus * 0.20));
-                    System.out.println("Salário calculado: " + getSalario());
-                } else {
-                    System.out.println("Titulação inválida. O salário não será ajustado.");
-                }
-                break;
-            case false:
-                if (titulacao.equalsIgnoreCase("Doutorado")) {
-                    int salarioPreBonus = 100 * cargaHoraria;
-                    setSalario(salarioPreBonus);
-                    System.out.println("Salário calculado: " + getSalario());
-                } else if (titulacao.equalsIgnoreCase("Mestrado")) {
-                    int salarioPreBonus = 80 * cargaHoraria;
-                    setSalario(salarioPreBonus);
-                    System.out.println("Salário calculado: " + getSalario());
-                } else {
-                    System.out.println("Titulação inválida. O salário não será ajustado.");
-                }
-                break;
+        if (eCoordenador) {
+            if (titulacao.equalsIgnoreCase("Doutorado")) {
+                int salarioPreBonus = 100 * cargaHoraria;
+                setSalario(salarioPreBonus + (salarioPreBonus * 0.20));
+                System.out.println("Salário calculado: " + getSalario());
+            } else if (titulacao.equalsIgnoreCase("Mestrado")) {
+                int salarioPreBonus = 80 * cargaHoraria;
+                setSalario(salarioPreBonus + (salarioPreBonus * 0.20));
+                System.out.println("Salário calculado: " + getSalario());
+            } else {
+                System.out.println("Titulação inválida. O salário não será ajustado.");
+            }
+        } else {
+            if (titulacao.equalsIgnoreCase("Doutorado")) {
+                int salarioPreBonus = 100 * cargaHoraria;
+                setSalario(salarioPreBonus);
+                System.out.println("Salário calculado: " + getSalario());
+            } else if (titulacao.equalsIgnoreCase("Mestrado")) {
+                int salarioPreBonus = 80 * cargaHoraria;
+                setSalario(salarioPreBonus);
+                System.out.println("Salário calculado: " + getSalario());
+            } else {
+                System.out.println("Titulação inválida. O salário não será ajustado.");
+            }
         }
-    
     }
         
 
