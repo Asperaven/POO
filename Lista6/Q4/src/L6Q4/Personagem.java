@@ -23,7 +23,6 @@ public class Personagem {
         }
     }
 
-    // Getters and Setters
     public int getVida() {
         return this.vida;
     }
