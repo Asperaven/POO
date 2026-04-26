@@ -34,7 +34,6 @@ public class Main {
                 if (f != null) {
                     f.exibirInformacoes();
                     
-                    // Submenu if Executive
                     if (f instanceof FuncionarioExecutivo) {
                         FuncionarioExecutivo exec = (FuncionarioExecutivo) f;
                         submenuExecutivo(exec, empresa, scanner);
