@@ -69,6 +69,7 @@ public class Disciplina {
     }
 
     public void ordenarAlfabeticamente() {
+        corrigirTodasAsProvas();
         Provas[] provasOrdenadas = provas.clone();
         for (int i = 0; i < provasOrdenadas.length - 1; i++) {
             for (int j = 0; j < provasOrdenadas.length - i - 1; j++) {
@@ -92,6 +93,7 @@ public class Disciplina {
     }
 
     public void ordernarPorAcertos() {
+        corrigirTodasAsProvas();
         Provas[] provasOrdenadas = provas.clone();
         for (int i = 0; i < provasOrdenadas.length - 1; i++) {
             for (int j = 0; j < provasOrdenadas.length - i - 1; j++) {

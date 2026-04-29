@@ -47,10 +47,8 @@ public class Gabarito {
         try (FileReader fr = new FileReader(nome + "_gabarito.txt");
             BufferedReader br = new BufferedReader(fr)) {
             String linha;
-            int index = 0;
             while ((linha = br.readLine()) != null) {
-                respostas[index] = linha;
-                index++;
+                System.out.println(linha);
             }
         } catch (IOException e) {
             e.printStackTrace();

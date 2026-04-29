@@ -8,7 +8,7 @@ public class Main {
         try (Scanner sc = new Scanner(System.in)) {
             String nomeDisciplina = sc.nextLine();
             System.out.println("Digite as respostas do gabarito (10 respostas, V ou F):");
-            String[] respostasGabarito = sc.nextLine().split(" ");
+            String[] respostasGabarito = sc.nextLine().split("");
             Gabarito gabarito = new Gabarito(respostasGabarito);
             gabarito.salvarGabarito(nomeDisciplina);
             System.out.println("Digite o numero de alunos:");
@@ -19,7 +19,7 @@ public class Main {
                 System.out.println("Digite o nome do aluno " + (i + 1) + ":");
                 String nomeAluno = sc.nextLine();
                 System.out.println("Digite as respostas do aluno " + (i + 1) + " (10 respostas, V ou F):");
-                String[] respostasAluno = sc.nextLine().split(" ");
+                String[] respostasAluno = sc.nextLine().split("");
                 provas[i] = new Provas(respostasAluno, nomeAluno);
             }
             Disciplina disciplina = new Disciplina(nomeDisciplina, provas, gabarito);
