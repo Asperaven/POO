@@ -1,0 +1,1 @@
+## Exercicio basico de escrita e leitura para arquivos de texto
