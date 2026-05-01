@@ -5,4 +5,9 @@ public class CasaParada extends Casa {
         super(posicao);
     }
 
+    public void pararJogador(Jogador jogador) {
+        jogador.setSuaVez(false); // O jogador perde a vez
+        System.out.println(jogador.getNome() + " parou na casa " + getPosicao());
+    }
+
 }

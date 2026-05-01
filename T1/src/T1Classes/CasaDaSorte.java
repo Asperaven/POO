@@ -5,4 +5,10 @@ public class CasaDaSorte extends Casa {
         super(posicao);
     }
 
+    public void adiantarJogador(Jogador jogador) {
+        int novaPosicao = jogador.getPosicao() + 3;
+        jogador.setPosicao(novaPosicao);
+        System.out.println(jogador.getNome() + " avançou para a casa " + novaPosicao);
+    }
+
 }
