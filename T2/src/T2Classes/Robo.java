@@ -110,13 +110,11 @@ public class Robo {
     }
 
     public void mover(String direcao) throws MovimentoInvalidoException {
-        // Tenta converter para inteiro se a entrada for numérica
         try {
             int direcaoInt = Integer.parseInt(direcao);
             mover(direcaoInt);
             return;
         } catch (NumberFormatException e) {
-            // Se não for número, continua com a lógica de string
         }
         
         int anteriorX = x;
