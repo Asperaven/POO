@@ -12,6 +12,8 @@ public class Tabuleiro {
                 casas[i] = new CasaSurpresa(i);
             } else if (i == 4 || i == 14 || i == 29) {
                 casas[i] = new CasaDaSorte(i);
+            } else if (i == 16 || i == 26) {
+                casas[i] = new CasaVoltarCompetidor(i);
             } else if (i == 19 || i == 34) {
                 casas[i] = new CasaMagica(i);
             } else {
@@ -19,5 +21,4 @@ public class Tabuleiro {
             }
         }
     }
-
 }

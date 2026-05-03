@@ -1,6 +1,6 @@
 package T1Classes;
 
-public class CasaRetrocede {
+public class CasaRetrocede extends Casa {
     public CasaRetrocede(int posicao) {
         super(posicao);
     }
