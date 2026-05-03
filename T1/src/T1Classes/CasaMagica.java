@@ -6,9 +6,12 @@ public class CasaMagica extends Casa {
     }
 
     public void trocarPosicao(Jogador[] jogador) {
-        for (int i = 0; i < jogador.length; i++) {
+        int i;
+        int posicaoMinima = 0;
+        Jogador jogadorNaCasa = null;
+        for (i = 0; i < jogador.length; i++) {
             jogadorNaCasa = jogador[i];
-            int posicaoMinima = 0;
+            posicaoMinima = 0;
             for (int j = 0; j< jogador.length; j++) {
                 if (jogador[j].getPosicao() < jogador[posicaoMinima].getPosicao()) {
                     posicaoMinima = j;
@@ -16,14 +19,15 @@ public class CasaMagica extends Casa {
             }
         }
 
-        ultimoJogador = jogador[posicaoMinima];
-        if (i != posicaoMinima) {
-            int posicaoTemp = jogador[i].getPosicao();
-            jogador[i].setPosicao(jogador[posicaoMinima].getPosicao());
+        int indiceJogadorNaCasa = i - 1;
+        Jogador ultimoJogador = jogador[posicaoMinima];
+        if (indiceJogadorNaCasa != posicaoMinima) {
+            int posicaoTemp = jogador[indiceJogadorNaCasa].getPosicao();
+            jogador[indiceJogadorNaCasa].setPosicao(jogador[posicaoMinima].getPosicao());
             jogador[posicaoMinima].setPosicao(posicaoTemp);
-            System.out.println(jogador[i].getNome() + " trocou de posição com " + jogador[posicaoMinima].getNome());
+            System.out.println(jogadorNaCasa.getNome() + " trocou de posição com " + jogador[posicaoMinima].getNome());
         } else {
-            System.out.println(jogador[i].getNome() + " está no ultimo lugar e não pode trocar de posição.");
+            System.out.println(jogadorNaCasa.getNome() + " está no ultimo lugar e não pode trocar de posição.");
         }
 
     }
