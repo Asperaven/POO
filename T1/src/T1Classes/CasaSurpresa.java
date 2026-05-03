@@ -1,5 +1,7 @@
 package T1Classes;
 
+import java.util.Random;
+
 public class CasaSurpresa extends Casa {
     public CasaSurpresa(int posicao) {
         super(posicao);
