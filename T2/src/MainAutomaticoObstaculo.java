@@ -166,11 +166,13 @@ public class MainAutomaticoObstaculo {
         System.out.println("  - Status: " + (robo1.isEliminado() ? "ELIMINADO" : "ATIVO"));
         System.out.println("  - Movimentos válidos: " + movimentosValidos1);
         System.out.println("  - Movimentos inválidos: " + movimentosInvalidos1);
+        System.out.println(" - Tipo de robo: INTELIGENTE");
         System.out.println();
         System.out.println("Robo 2 (" + robo2.getCor() + "):");
         System.out.println("  - Status: " + (robo2.isEliminado() ? "ELIMINADO" : "ATIVO"));
         System.out.println("  - Movimentos válidos: " + movimentosValidos2);
         System.out.println("  - Movimentos inválidos: " + movimentosInvalidos2);
+        System.out.println(" - Tipo de robo: REGULAR");
         
         scanner.close();
     }

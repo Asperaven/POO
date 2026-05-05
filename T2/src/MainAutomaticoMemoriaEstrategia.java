@@ -47,8 +47,6 @@ public class MainAutomaticoMemoriaEstrategia {
         int movimentosInvalidos1 = 0;
         int movimentosValidos2 = 0;
         int movimentosInvalidos2 = 0;
-        
-        String[] direcoes = {"", "up", "down", "right", "left"};
         Robo vencedor = null;
         int rodada = 0;
         
@@ -131,11 +129,13 @@ public class MainAutomaticoMemoriaEstrategia {
         System.out.println("  - Movimentos válidos: " + movimentosValidos1);
         System.out.println("  - Movimentos inválidos: " + movimentosInvalidos1);
         System.out.println("  - Status: " + (robo1.isEliminado() ? "ELIMINADO" : "ATIVO"));
+        System.out.println(" - Tipo de robo: MEMORIA");
         System.out.println();
         System.out.println("Robo 2 (" + robo2.getCor() + "):");
         System.out.println("  - Movimentos válidos: " + movimentosValidos2);
         System.out.println("  - Movimentos inválidos: " + movimentosInvalidos2);
         System.out.println("  - Status: " + (robo2.isEliminado() ? "ELIMINADO" : "ATIVO"));
+        System.out.println(" - Tipo de robo: ESTRATEGIA");
         
         scanner.close();
     }

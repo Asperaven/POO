@@ -4,7 +4,7 @@ import java.util.*;
 public class TabuleiroCartesianoIndividual {
     private Robo robo;
     private Alimento alimento;
-    private ArrayList<Obstaculo> obstaculos;
+    private List<Obstaculo> obstaculos;
     private static final int TAMANHO_TABULEIRO = 5;
     
     // ANSI color codes
@@ -27,6 +27,10 @@ public class TabuleiroCartesianoIndividual {
     public void adicionarObstaculo(Obstaculo obstaculo) {
         obstaculos.add(obstaculo);
         robo.adicionarObstaculo(obstaculo);
+    }
+
+    public List<Obstaculo> getObstaculos() {
+        return obstaculos;
     }
 
     
