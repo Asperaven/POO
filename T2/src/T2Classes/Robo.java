@@ -9,6 +9,8 @@ public class Robo {
     private boolean isEliminado;
     private List<Obstaculo> obstaculos;
     private List<Obstaculo> tabuleiroObstaculos; // Referência à lista de obstáculos do tabuleiro
+    private EstrategiaMovimento estrategia; // Estratégia de movimento do robô
+    protected Alimento alimento; // Referência ao alimento para estratégias que precisam
     
     private static final String[] CORES_VALIDAS = {"vermelho", "verde", "azul", "amarelo", "roxo", "rosa"};
 
@@ -19,6 +21,7 @@ public class Robo {
         this.cor = cor;
         this.isEliminado = false;
         this.obstaculos = new ArrayList<>();
+        this.estrategia = null;
     }
     
     private void validarCor(String cor) throws RoboCorInvalidaException {
@@ -69,6 +72,25 @@ public class Robo {
     // Recebe a referência à lista de obstáculos do tabuleiro para que o robô possa remover bombas detonadas completamente
     public void settabuleiroObstaculos(List<Obstaculo> tabuleiroObstaculos) {
         this.tabuleiroObstaculos = tabuleiroObstaculos;
+    }
+
+    public void setEstrategia(EstrategiaMovimento estrategia) {
+        this.estrategia = estrategia;
+    }
+
+    public void moverComEstrategia(Alimento alimento) throws MovimentoInvalidoException {
+        if (estrategia == null) {
+            throw new MovimentoInvalidoException("Nenhuma estrategia foi definida para o robo.");
+        }
+        estrategia.executar(this, alimento);
+    }
+
+    public void setAlimento(Alimento alimento) {
+        this.alimento = alimento;
+    }
+
+    public Alimento getAlimento() {
+        return alimento;
     }
 
     private Obstaculo verificarObstaculoEm(int posX, int posY) {

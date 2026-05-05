@@ -1,16 +1,13 @@
 package T2Classes;
 
-public class RoboEstrategico extends Robo {
-    public RoboEstrategico(String cor) throws RoboCorInvalidaException {
-        super(cor);
-    }
+public class EstrategiaEstrategico implements EstrategiaMovimento {
 
-    @Override
-    public void mover(String direcao) throws MovimentoInvalidoException {
+    @Override 
+    public void executar(Robo robo, Alimento alimento) throws MovimentoInvalidoException {
         int objetivoX = alimento.getX();
         int objetivoY = alimento.getY();
-        int deltaX = objetivoX - getX();
-        int deltaY = objetivoY - getY();
+        int deltaX = objetivoX - robo.getX();
+        int deltaY = objetivoY - robo.getY();
         
         String direcaoPrioritaria;
         if (deltaX > 0) {
@@ -22,9 +19,10 @@ public class RoboEstrategico extends Robo {
         } else if (deltaY < 0) {
             direcaoPrioritaria = "down";
         } else {
-            return;
+            return;  
         }
-        super.mover(direcaoPrioritaria);
+        
+        robo.mover(direcaoPrioritaria);
     }
 
 }

@@ -1,5 +1,4 @@
 package T2Classes;
-
 import java.util.*;
 
 public class TabuleiroCartesianoMultiplo {
@@ -100,7 +99,6 @@ public class TabuleiroCartesianoMultiplo {
             }
         }
         
-        // Verificar se há um obstáculo nesta posição
         Obstaculo obstaculo = verificarObstaculoEm(x, y);
         if (obstaculo != null) {
             if (obstaculo instanceof Bomba) {
@@ -119,7 +117,6 @@ public class TabuleiroCartesianoMultiplo {
         }
     }
     
-    // Encontra um obstáculo nas coordenadas fornecidas
     private Obstaculo verificarObstaculoEm(int posX, int posY) {
         for (Obstaculo obstaculo : obstaculos) {
             if (obstaculo.getX() == posX && obstaculo.getY() == posY) {

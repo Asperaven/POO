@@ -21,6 +21,7 @@ public class MainInterativo {
         }
         
         TabuleiroCartesianoIndividual tabuleiro = new TabuleiroCartesianoIndividual(robo1, alimento);
+        robo1.setAlimento(alimento);
         
         System.out.println("Alimento posicionado em: (" + alimento.getX() + ", " + alimento.getY() + ")");
         System.out.println("Menu de controle do robo. Digite a direcao para mover o robo (1/up, 2/down, 3/right, 4/left) ou 'sair' para encerrar:");

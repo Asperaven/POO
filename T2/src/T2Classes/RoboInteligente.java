@@ -1,18 +1,17 @@
 package T2Classes;
-
 import java.util.*;
 
 public class RoboInteligente extends Robo {
     private Set<String> movimentosExaustos;
-    private int ultimaX;
-    private int ultimaY;
+    private int ultimoX;
+    private int ultimoY;
     private int tentativasInvalidas; 
     
     public RoboInteligente(String cor) throws RoboCorInvalidaException {
         super(cor);
         this.movimentosExaustos = new HashSet<>();
-        this.ultimaX = getX();
-        this.ultimaY = getY();
+        this.ultimoX = getX();
+        this.ultimoY = getY();
         this.tentativasInvalidas = 0;
     }
 
@@ -20,10 +19,10 @@ public class RoboInteligente extends Robo {
     public void mover(String direcao) throws MovimentoInvalidoException {
         tentativasInvalidas = 0;
 
-        if (getX() != ultimaX || getY() != ultimaY) {
+        if (getX() != ultimoX || getY() != ultimoY) {
             movimentosExaustos.clear();
-            ultimaX = getX();
-            ultimaY = getY();
+            ultimoX = getX();
+            ultimoY = getY();
         }
 
         try {
@@ -63,47 +62,47 @@ public class RoboInteligente extends Robo {
     }
 
     private void tentarMover(String direcao) throws MovimentoInvalidoException {
-        int novaX = getX();
-        int novaY = getY();
+        int novoX = getX();
+        int novoY = getY();
         String cor = getCor();
-        int anteriorX = novaX;
-        int anteriorY = novaY;
+        int anteriorX = novoX;
+        int anteriorY = novoY;
 
         switch (direcao) {
             case "up":
-                if (novaY + 1 < 0 || novaY + 1 > 4 || novaX < 0 || novaX > 4) {
+                if (novoY + 1 < 0 || novoY + 1 > 4 || novoX < 0 || novoX > 4) {
                     throw new MovimentoInvalidoException("Movimento invalido: o robo nao pode se mover para cima do plano cartesiano.");
                 }
-                novaY++;
-                System.out.println("Robo " + cor + " se moveu para cima. Posicao atual: (" + novaX + ", " + novaY + ")");
+                novoY++;
+                System.out.println("Robo " + cor + " se moveu para cima. Posicao atual: (" + novoX + ", " + novoY + ")");
                 break;
             case "down":
-                if (novaY - 1 < 0 || novaY - 1 > 4 || novaX < 0 || novaX > 4) {
+                if (novoY - 1 < 0 || novoY - 1 > 4 || novoX < 0 || novoX > 4) {
                     throw new MovimentoInvalidoException("Movimento invalido: o robo nao pode se mover para baixo do plano cartesiano.");
                 }
-                novaY--;
-                System.out.println("Robo " + cor + " se moveu para baixo. Posicao atual: (" + novaX + ", " + novaY + ")");
+                novoY--;
+                System.out.println("Robo " + cor + " se moveu para baixo. Posicao atual: (" + novoX + ", " + novoY + ")");
                 break;
             case "right":
-                if (novaX + 1 < 0 || novaX + 1 > 4 || novaY < 0 || novaY > 4) {
+                if (novoX + 1 < 0 || novoX + 1 > 4 || novoY < 0 || novoY > 4) {
                     throw new MovimentoInvalidoException("Movimento invalido: o robo nao pode se mover para a direita do plano cartesiano.");
                 }
-                novaX++;
-                System.out.println("Robo " + cor + " se moveu para a direita. Posicao atual: (" + novaX + ", " + novaY + ")");
+                novoX++;
+                System.out.println("Robo " + cor + " se moveu para a direita. Posicao atual: (" + novoX + ", " + novoY + ")");
                 break;
             case "left":
-                if (novaX - 1 < 0 || novaX - 1 > 4 || novaY < 0 || novaY > 4) {
+                if (novoX - 1 < 0 || novoX - 1 > 4 || novoY < 0 || novoY > 4) {
                     throw new MovimentoInvalidoException("Movimento invalido: o robo nao pode se mover para a esquerda do plano cartesiano.");
                 }
-                novaX--;
-                System.out.println("Robo " + cor + " se moveu para a esquerda. Posicao atual: (" + novaX + ", " + novaY + ")");
+                novoX--;
+                System.out.println("Robo " + cor + " se moveu para a esquerda. Posicao atual: (" + novoX + ", " + novoY + ")");
                 break;
             default:
                 throw new MovimentoInvalidoException("Direcao invalida: " + direcao);
         }
 
-        setX(novaX);
-        setY(novaY);
+        setX(novoX);
+        setY(novoY);
         verificarObstaculoAposMover(anteriorX, anteriorY);
     }
 

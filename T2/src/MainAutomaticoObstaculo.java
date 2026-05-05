@@ -39,6 +39,8 @@ public class MainAutomaticoObstaculo {
         // Fornece aos robôs acesso à lista de obstáculos do tabuleiro para remover bombas completamente
         robo1.settabuleiroObstaculos(tabuleiro.getObstaculos());
         robo2.settabuleiroObstaculos(tabuleiro.getObstaculos());
+        robo1.setAlimento(alimento);
+        robo2.setAlimento(alimento);
         System.out.println("\nAlimento posicionado em: (" + alimento.getX() + ", " + alimento.getY() + ")");
         System.out.println("Gostaria de adicionar um obstaculo? 0 para nao, 1 para sim.");
         while (true) {

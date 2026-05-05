@@ -1,8 +1,10 @@
 package T2Classes;
+import java.util.*;
 
 public class TabuleiroCartesianoIndividual {
     private Robo robo;
     private Alimento alimento;
+    private ArrayList<Obstaculo> obstaculos;
     private static final int TAMANHO_TABULEIRO = 5;
     
     // ANSI color codes
@@ -19,6 +21,12 @@ public class TabuleiroCartesianoIndividual {
     public TabuleiroCartesianoIndividual(Robo robo, Alimento alimento) {
         this.robo = robo;
         this.alimento = alimento;
+        this.obstaculos = new ArrayList<>();
+    }
+
+    public void adicionarObstaculo(Obstaculo obstaculo) {
+        obstaculos.add(obstaculo);
+        robo.adicionarObstaculo(obstaculo);
     }
 
     
@@ -51,7 +59,16 @@ public class TabuleiroCartesianoIndividual {
             // Célula com robô
             return obterCorRobo() + "| * |" + RESET;
         }
-        
+
+        Obstaculo obstaculo = verificarObstaculoEm(x, y);
+        if (obstaculo != null) {
+            if (obstaculo instanceof Bomba) {
+                return WHITE + "| & |" + RESET;
+            } else if (obstaculo instanceof Rocha) {
+                return WHITE + "| O |" + RESET;
+            }
+        }
+
         if (alimento.getX() == x && alimento.getY() == y) {
             // Célula com alimento
             return WHITE + "| @ |" + RESET;
@@ -59,6 +76,15 @@ public class TabuleiroCartesianoIndividual {
             // Célula vazia
             return GRAY + "| # |" + RESET;
         }
+    }
+
+    private Obstaculo verificarObstaculoEm(int x, int y) {
+        for (Obstaculo obstaculo : obstaculos) {
+            if (obstaculo.getX() == x && obstaculo.getY() == y) {
+                return obstaculo;
+            }
+        }
+        return null;
     }
     
     private String obterCorRobo() {

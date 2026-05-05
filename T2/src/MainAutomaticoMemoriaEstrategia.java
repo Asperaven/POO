@@ -36,6 +36,8 @@ public class MainAutomaticoMemoriaEstrategia {
         }
 
         TabuleiroCartesianoMultiplo tabuleiro = new TabuleiroCartesianoMultiplo(robo1, robo2, alimento);
+        robo1.setAlimento(alimento);
+        robo2.setAlimento(alimento);
         System.out.println("\nAlimento posicionado em: (" + alimento.getX() + ", " + alimento.getY() + ")");
         System.out.println("Robo 1 (" + robo1.getCor() + ") e Robo 2 (" + robo2.getCor() + ") se movendo automaticamente para encontrar o alimento...\n");
         tabuleiro.exibirTabuleiro();
