@@ -103,7 +103,7 @@ public class TabuleiroCartesianoIndividual {
             case "rosa":
                 return LIGHT_MAGENTA;
             default:
-                return WHITE; 
+                return WHITE;
         }
     }
 }

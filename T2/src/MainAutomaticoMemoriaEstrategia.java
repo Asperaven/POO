@@ -66,8 +66,6 @@ public class MainAutomaticoMemoriaEstrategia {
                     int[] tentativa1 = robo1.calcularProxima(random.nextInt(4) + 1);
                     try {
                         robo1.mover(direcao1);
-                        int tentativasInvalidas1 = robo1.getTentativasInvalidas();
-                        movimentosInvalidos1 += tentativasInvalidas1;
                         movimentosValidos1++;
                         tabuleiro.setTentativaRobo1(null);
                         if (robo1.encontrouAlimento(alimento)) {
@@ -99,7 +97,7 @@ public class MainAutomaticoMemoriaEstrategia {
                     } catch (MovimentoInvalidoException e) {
                         movimentosInvalidos2++;
                         tabuleiro.setTentativaRobo2(tentativa2);
-                        System.out.println(RED + "✗ Robo " + robo2.getCor() + " tentou se mover para " + direcoes[direcao2] + " - INVALIDO" + RESET);
+                        System.out.println(RED + "✗ Robo " + robo2.getCor() + " tentou se mover para " + direcao2 + " - INVALIDO" + RESET);
                     }
                 } else {
                     System.out.println("Robo 2 (" + robo2.getCor() + ") foi eliminado e não pode se mover.");
