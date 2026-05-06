@@ -1,5 +1,5 @@
 package T2Classes;
-import java.util.*;
+import java.util.ArrayList;
 
 public class TabuleiroCartesianoMultiplo {
     private Robo robo1;
