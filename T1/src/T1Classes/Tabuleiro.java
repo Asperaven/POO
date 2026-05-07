@@ -21,4 +21,40 @@ public class Tabuleiro {
             }
         }
     }
+
+    //tabuleiro borda de quadrado
+    public void imprimirTabuleiro(Jogador[] jogadores){
+        for (int i = 0; i <= 10; i++) {
+            System.out.print(mostrarSimbolo(i, jogadores));
+        }
+        System.out.println();
+
+        for (int i = 1; i <= 9; i++){
+            System.out.print(mostrarSimbolo(40 - i, jogadores));
+            for(int j = 0; j < 9; j++){
+                System.out.print("    ");
+            }
+            System.out.println(mostrarSimbolo(10 + i, jogadores));
+        }
+
+        for(int i = 30; i >= 20; i--){
+            System.out.print(mostrarSimbolo(i, jogadores));
+        }
+        System.out.println("\n");
+    }
+
+    public String mostrarSimbolo(int indice, Jogador[] jogadores){
+        for(Jogador j : jogadores){
+            if(j.getPosicao() == indice){
+                if(j.isSortudo()){
+                    return "[+]";
+                } else if (j.isAzarado()){
+                    return "[-]";
+                } else {
+                    return "[#]";
+                }
+            }
+        }
+        return String.format("[%02d]", indice + 1);
+    }
 }

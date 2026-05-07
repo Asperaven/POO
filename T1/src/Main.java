@@ -1,11 +1,15 @@
+import T1Classes.CasaDaSorte;
 import T1Classes.Jogador;
 import T1Classes.Jogo;
+import T1Classes.Tabuleiro;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner input = new Scanner(System.in);
+
+        Tabuleiro tabuleiro = new Tabuleiro(40);
 
         System.out.println("---JOGO - INICIO---");
         int qtdJogadores;
@@ -86,6 +90,6 @@ public class Main {
             System.out.println("Tipo alterado!");
         }
         Jogo jogo = new Jogo(jogadores);
-        jogo.jogar();
+        jogo.jogar(tabuleiro);
     }
 }
