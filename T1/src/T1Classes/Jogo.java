@@ -13,7 +13,8 @@ public class Jogo {
         this.tabuleiro = new Tabuleiro(numCasas);
     }
 
-    public void jogar() {
+    public void jogar(Tabuleiro tabuleiro){
+
         boolean jogoRodando = true;
 
         while (jogoRodando) {
@@ -29,6 +30,7 @@ public class Jogo {
                         System.out.println(j.getCor() + " na casa " + j.getPosicao());
                     }
                     System.out.println("VEZ DO " + jogadorAtual.getCor().toUpperCase() + "!\n");
+                    tabuleiro.imprimirTabuleiro(jogadores);
 
                     boolean resultadosIguais = jogadorAtual.mover(true);
                     rodadas[i]++;
