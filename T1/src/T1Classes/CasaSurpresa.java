@@ -7,6 +7,12 @@ public class CasaSurpresa extends Casa {
         super(posicao);
     }
 
+    @Override
+    public void acao(ContextoExecucao contexto) {
+        super.acao(contexto);
+        surpreenderJogador(contexto.getJogador());
+    }
+
     public void surpreenderJogador(Jogador jogador) {
         Random rand = new Random();
         int carta = rand.nextInt(3); // Gera um número aleatório entre 0 e 2

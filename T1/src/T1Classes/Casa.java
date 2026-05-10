@@ -11,4 +11,8 @@ public class Casa {
         return posicao;
     }
 
+    public void acao(ContextoExecucao contexto) {
+        System.out.println("Voce esta na casa " + posicao);
+    }
+
 }

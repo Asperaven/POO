@@ -5,6 +5,12 @@ public class CasaMagica extends Casa {
         super(posicao);
     }
 
+    @Override
+    public void acao(ContextoExecucao contexto) {
+        super.acao(contexto);
+        trocarPosicao(contexto.getJogadores());
+    }
+
     public void trocarPosicao(Jogador[] jogador) {
         int i;
         int posicaoMinima = 0;

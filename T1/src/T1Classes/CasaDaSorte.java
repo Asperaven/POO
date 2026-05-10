@@ -5,6 +5,12 @@ public class CasaDaSorte extends Casa {
         super(posicao);
     }
 
+    @Override
+    public void acao(ContextoExecucao contexto) {
+        super.acao(contexto);
+        adiantarJogador(contexto.getJogador());
+    }
+
     public void adiantarJogador(Jogador jogador) {
         int novaPosicao = jogador.getPosicao() + 3;
         jogador.setPosicao(novaPosicao);
