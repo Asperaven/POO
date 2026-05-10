@@ -1,11 +1,11 @@
 package T2Classes;
-import java.util.*;
+import java.util.ArrayList;
 
 public class TabuleiroCartesianoMultiplo {
     private Robo robo1;
     private Robo robo2;
     private Alimento alimento;
-    private List<Obstaculo> obstaculos;
+    private ArrayList<Obstaculo> obstaculos;
     private int[] tentadaRobo1 = null; // posição tentada do robo 1
     private int[] tentadaRobo2 = null; // posição tentada do robo 2
     private static final int TAMANHO_TABULEIRO = 5;
@@ -36,7 +36,7 @@ public class TabuleiroCartesianoMultiplo {
     }
     
     // Fornece acesso à lista de obstáculos para que os robôs possam remover completamente as bombas detonadas
-    public List<Obstaculo> getObstaculos() {
+    public ArrayList<Obstaculo> getObstaculos() {
         return obstaculos;
     }
     

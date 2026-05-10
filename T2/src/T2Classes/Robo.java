@@ -1,16 +1,15 @@
 package T2Classes;
-
-import java.util.*;
+import java.util.ArrayList;
 
 public class Robo {
     private int x;
     private int y;
     private String cor;
     private boolean isEliminado;
-    private List<Obstaculo> obstaculos;
-    private List<Obstaculo> tabuleiroObstaculos; // Referência à lista de obstáculos do tabuleiro
+    private ArrayList<Obstaculo> obstaculos;
+    private ArrayList<Obstaculo> tabuleiroObstaculos; // Referência à lista de obstáculos do tabuleiro
     private EstrategiaMovimento estrategia; // Estratégia de movimento do robô
-    protected Alimento alimento; // Referência ao alimento para estratégias que precisam
+    protected Alimento alimento; 
     
     private static final String[] CORES_VALIDAS = {"vermelho", "verde", "azul", "amarelo", "roxo", "rosa"};
 
@@ -70,7 +69,7 @@ public class Robo {
     }
 
     // Recebe a referência à lista de obstáculos do tabuleiro para que o robô possa remover bombas detonadas completamente
-    public void settabuleiroObstaculos(List<Obstaculo> tabuleiroObstaculos) {
+    public void settabuleiroObstaculos(ArrayList<Obstaculo> tabuleiroObstaculos) {
         this.tabuleiroObstaculos = tabuleiroObstaculos;
     }
 
