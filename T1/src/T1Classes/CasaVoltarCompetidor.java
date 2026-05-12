@@ -21,7 +21,7 @@ public class CasaVoltarCompetidor extends Casa{
             if(i == escolha){
                 Jogador jogadorEscolhido = jogadores[i];
                 jogadorEscolhido.setPosicao(0);
-                System.out.println(jogadorEscolhido.getNome() + "voltou para o inicio do jogo!");
+                System.out.println(jogadorEscolhido.getNome() + " voltou para o inicio do jogo!");
                 return;
             }
         }

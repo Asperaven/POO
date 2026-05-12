@@ -13,7 +13,7 @@ public class CasaParada extends Casa {
 
     public void pararJogador(Jogador jogador) {
         jogador.setSuaVez(false); // O jogador perde a vez
-        System.out.println(jogador.getNome() + " parou na casa " + getPosicao());
+        System.out.println(jogador.getNome() + " parou na casa " + (getPosicao() + 1));
     }
 
 }
