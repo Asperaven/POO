@@ -22,6 +22,10 @@ public class Tabuleiro {
         }
     }
 
+    public Casa getCasa(int posicao){
+        return casas[posicao];
+    }
+
     //tabuleiro borda de quadrado
     public void imprimirTabuleiro(Jogador[] jogadores){
         for (int i = 0; i <= 10; i++) {
