@@ -16,7 +16,7 @@ public class Jogo {
         this.tabuleiro = new Tabuleiro(numCasas);
     }
 
-    public void jogar(Tabuleiro tabuleiro) throws InterruptedException {
+    public void jogar() throws InterruptedException {
 
         boolean jogoRodando = true;
         Scanner input = new Scanner(System.in);
@@ -29,12 +29,13 @@ public class Jogo {
                 boolean continuarJogando = true;
 
                 while (continuarJogando) {
-                    System.out.println("\n-POSIÇÕES-");
+                    System.out.println("\n-POSICOES-");
                     for (Jogador j : jogadores) {
                         System.out.println(j.getCor() + " na casa " + (j.getPosicao() + 1));
                     }
                     System.out.println("VEZ DO " + jogadorAtual.getCor().toUpperCase() + "!\n");
-                    tabuleiro.imprimirTabuleiro(jogadores);
+                    this.tabuleiro.imprimirTabuleiro(jogadores);
+                    Thread.sleep(1000);
                     boolean resultadosIguais = false;
 
                     if(debug == true){
@@ -43,9 +44,10 @@ public class Jogo {
                         jogadorAtual.setPosicao(posicaoEscolhida - 1);
                     } else {
                         resultadosIguais = jogadorAtual.mover(true);
-                        Thread.sleep(1000);
                     }
+                    System.out.println("Soma dos dados do jogador " + jogadorAtual.getCor() + ": " + jogadorAtual.getUltimaSomaDados() + "\n");
                     rodadas[i]++;
+
 
                     int indiceAtual = jogadorAtual.getPosicao();
                     if (indiceAtual >= 39){
@@ -54,10 +56,11 @@ public class Jogo {
                         continuarJogando = false;
                         break;
                     } else {
-                        ContextoExecucao contexto = new ContextoExecucao(jogadorAtual, jogadores, 0);
+                        ContextoExecucao contexto = new ContextoExecucao(jogadorAtual, jogadores, 0, input);
                         Casa casaAtual = tabuleiro.getCasa(indiceAtual);
                         casaAtual.acao(contexto);
                     }
+                    Thread.sleep(1000);
 
                     if (resultadosIguais) {
                         System.out.println("Dados iguais! Pode jogar novamente.");
@@ -73,7 +76,7 @@ public class Jogo {
         }
         System.out.println("---FIM DE JOGO---");
         for (int i = 0; i < jogadores.length; i++) {
-            System.out.printf("Jogador: %s - Cor: %s - Jogadas: %d - Posição: %d\n", jogadores[i].getNome(), jogadores[i].getCor(),
+            System.out.printf("Jogador: %s - Cor: %s - Jogadas: %d - Posicao: %d\n", jogadores[i].getNome(), jogadores[i].getCor(),
                     rodadas[i], (jogadores[i].getPosicao() + 1));
         }
     }

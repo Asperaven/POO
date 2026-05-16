@@ -8,11 +8,23 @@ public class Jogador {
     private boolean suaVez = false;
     private boolean sortudo = false;
     private boolean azarado = false;
+    private int ultimaSomaDados = 0;
+    private static final String[] CORES_VALIDAS = {"vermelho", "verde", "azul", "amarelo", "roxo", "rosa"};
 
-    public Jogador(String cor, String nome, int posicao) {
+    public Jogador(String cor, String nome, int posicao) throws JogadorCorInvalidaException {
         this.cor = cor;
+        validarCor(cor);
         this.nome = nome;
         this.posicao = posicao;
+    }
+
+    private void validarCor(String cor) throws JogadorCorInvalidaException {
+        for (String corValida : CORES_VALIDAS) {
+            if (corValida.equalsIgnoreCase(cor)) {
+                return;
+            }
+        }
+        throw new JogadorCorInvalidaException("Cor invalida: " + cor + ". Cores válidas: vermelho, verde, azul, amarelo, roxo, rosa");
     }
 
     public boolean isSuaVez() {
@@ -75,8 +87,13 @@ public class Jogador {
             total = dado1 + dado2;
         } while ((sortudo && total < 7) || (azarado && total > 6));
         
+        this.ultimaSomaDados = total;
         posicao += total;
 
         return dado1 == dado2;
+    }
+
+    public int getUltimaSomaDados() {
+        return ultimaSomaDados;
     }
 }

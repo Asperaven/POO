@@ -8,12 +8,12 @@ public class CasaParada extends Casa {
     @Override
     public void acao(ContextoExecucao contexto) {
         super.acao(contexto);
+        System.out.println("Casa Parada! Voce perdeu a vez!");
         pararJogador(contexto.getJogador());
     }
 
     public void pararJogador(Jogador jogador) {
         jogador.setSuaVez(false); // O jogador perde a vez
-        System.out.println(jogador.getNome() + " parou na casa " + (getPosicao() + 1));
     }
 
 }

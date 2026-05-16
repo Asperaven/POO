@@ -1,9 +1,12 @@
 package T1Classes;
 
+import java.util.Scanner;
+
 public class ContextoExecucao {
     private Jogador jogador;
     private Jogador[] jogadores;
     private int escolha;
+    private Scanner scanner;
 
     public ContextoExecucao(Jogador jogador) {
         this.jogador = jogador;
@@ -19,6 +22,13 @@ public class ContextoExecucao {
         this.escolha = escolha;
     }
 
+    public ContextoExecucao(Jogador jogador, Jogador[] jogadores, int escolha, Scanner scanner) {
+        this.jogador = jogador;
+        this.jogadores = jogadores;
+        this.escolha = escolha;
+        this.scanner = scanner;
+    }
+
     public Jogador getJogador() {
         return jogador;
     }
@@ -29,6 +39,10 @@ public class ContextoExecucao {
 
     public int getEscolha() {
         return escolha;
+    }
+
+    public Scanner getScanner() {
+        return scanner;
     }
 
 }

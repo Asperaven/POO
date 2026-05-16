@@ -1,5 +1,4 @@
 package T1Classes;
-import java.util.Scanner;
 
 public class CasaVoltarCompetidor extends Casa{
 
@@ -10,9 +9,8 @@ public class CasaVoltarCompetidor extends Casa{
     @Override
     public void acao(ContextoExecucao contexto) {
         super.acao(contexto);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Escolha um jogador para voltar ao início (0-" + (contexto.getJogadores().length - 1) + "):");
-        int escolha = scanner.nextInt();
+        System.out.println("Casa Voltar Competidor! Escolha um jogador para voltar ao início (0-" + (contexto.getJogadores().length - 1) + "):");
+        int escolha = contexto.getScanner().nextInt();
         voltarCompetidorInicio(contexto.getJogador(), contexto.getJogadores(), escolha);
     }
 
@@ -25,6 +23,6 @@ public class CasaVoltarCompetidor extends Casa{
                 return;
             }
         }
-        System.out.println("Jogador inválido!");
+        System.out.println("Jogador invalido!");
     }
 }

@@ -2,6 +2,14 @@ package T1Classes;
 
 public class Tabuleiro {
     private Casa[] casas;
+    // Cores ANSI para console
+    private static final String RESET = "\u001B[0m";
+    private static final String RED = "\u001B[31m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String BLUE = "\u001B[34m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String PURPLE = "\u001B[35m";
+    private static final String LIGHT_MAGENTA = "\u001B[95m";
 
     public Tabuleiro(int numCasas) {
         this.casas = new Casa[numCasas];
@@ -51,14 +59,34 @@ public class Tabuleiro {
         for(Jogador j : jogadores){
             if(j.getPosicao() == indice){
                 if(j.isSortudo()){
-                    return "[+]";
+                    return getCorJogador(j) + "[+]" + RESET;
                 } else if (j.isAzarado()){
-                    return "[-]";
+                    return getCorJogador(j) + "[-]" + RESET;
                 } else {
-                    return "[#]";
+                    return getCorJogador(j) + "[#]" + RESET;
                 }
             }
         }
         return String.format("[%02d]", indice + 1);
+    }
+
+    private String getCorJogador(Jogador jogador) {
+       String cor = jogador.getCor().toLowerCase();
+        switch (cor) {
+            case "vermelho":
+                return RED;
+            case "verde":
+                return GREEN;
+            case "azul":
+                return BLUE;
+            case "amarelo":
+                return YELLOW;
+            case "roxo":
+                return PURPLE;
+            case "rosa":
+                return LIGHT_MAGENTA;
+            default:
+                return RESET;
+        }
     }
 }

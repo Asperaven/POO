@@ -8,13 +8,14 @@ public class CasaDaSorte extends Casa {
     @Override
     public void acao(ContextoExecucao contexto) {
         super.acao(contexto);
+        System.out.println("Casa da Sorte! Avance 3 casas!");
         adiantarJogador(contexto.getJogador());
     }
 
     public void adiantarJogador(Jogador jogador) {
         int novaPosicao = jogador.getPosicao() + 3;
         jogador.setPosicao(novaPosicao);
-        System.out.println(jogador.getNome() + " avançou para a casa " + novaPosicao);
+        System.out.println(jogador.getNome() + " avancou para a casa " + (novaPosicao + 1));
     }
 
 }

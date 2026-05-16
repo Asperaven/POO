@@ -10,6 +10,7 @@ public class CasaSurpresa extends Casa {
     @Override
     public void acao(ContextoExecucao contexto) {
         super.acao(contexto);
+        System.out.println("Casa Surpresa! Tire uma carta surpresa para modificar sua sorte!");
         surpreenderJogador(contexto.getJogador());
     }
 

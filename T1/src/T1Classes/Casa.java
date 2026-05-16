@@ -12,7 +12,7 @@ public class Casa {
     }
 
     public void acao(ContextoExecucao contexto) {
-        System.out.println("Voce esta na casa " + posicao);
+        System.out.println("O jogador " + contexto.getJogador().getNome() + " alcancou a casa " + (getPosicao() + 1) + "!");
     }
 
 }

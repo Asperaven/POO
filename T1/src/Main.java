@@ -6,39 +6,36 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner input = new Scanner(System.in);
 
-        Tabuleiro tabuleiro = new Tabuleiro(40);
-
-        while (true){
+        while (true) {
             System.out.println("---JOGO - INICIO---");
             System.out.println("1 - Jogo Normal");
             System.out.println("2 - Modo Debug");
             System.out.println("3 - Sair");
-            System.out.println("Escolha uma opção: ");
+            System.out.println("Escolha uma opcao: ");
             int opcao = input.nextInt();
 
             if(opcao == 3) {
                 System.out.print("Saindo...");
+                input.close();
                 return;
             } else if (opcao != 1 && opcao !=2){
-                System.out.println("Opcao inválida!");
+                System.out.println("Opcao invalida!");
                 continue;
             }
 
             int qtdJogadores;
             while (true) {
-                System.out.println("Quantos jogadores jogarão a partida? (min: 2, max: 6)");
+                System.out.println("Quantos jogadores jogarao a partida? (min: 2, max: 6)");
                 qtdJogadores = input.nextInt();
                 input.nextLine();
                 if (qtdJogadores < 2 || qtdJogadores > 6) {
-                    System.out.println("Quantidade inválida! (min: 2, max: 6)");
+                    System.out.println("Quantidade invalida! (min: 2, max: 6)");
                 } else {
                     break;
                 }
             }
 
             Jogador[] jogadores = new Jogador[qtdJogadores];
-            int[] rodadas = new int[qtdJogadores];
-
             int tipoAzarado = 0;
             int tipoSortudo = 0;
             int tipoNormal = 0;
@@ -101,16 +98,16 @@ public class Main {
                     }
                     System.out.println("Tipo alterado!");
                 } else {
-                    System.out.print("Indice inválido!");
+                    System.out.print("Indice invalido!");
                 }
             }
             Jogo jogo = new Jogo(jogadores);
             if(opcao == 2){
                 jogo.setDebug(true);
                 System.out.println("--MODO DEBUG---");
-                jogo.jogar(tabuleiro);
+                jogo.jogar();
             } else if (opcao == 1) {
-                jogo.jogar(tabuleiro);
+                jogo.jogar();
             }
         }
     }

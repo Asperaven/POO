@@ -8,34 +8,29 @@ public class CasaMagica extends Casa {
     @Override
     public void acao(ContextoExecucao contexto) {
         super.acao(contexto);
-        trocarPosicao(contexto.getJogadores());
+        System.out.println("Casa magica! Trocou de posicao com o jogador mais atrasado!");
+        trocarPosicao(contexto.getJogador(), contexto.getJogadores());
     }
 
-    public void trocarPosicao(Jogador[] jogador) {
-        int i;
+    public void trocarPosicao(Jogador jogadorEmCasa, Jogador[] jogadores) {
         int posicaoMinima = 0;
-        Jogador jogadorNaCasa = null;
-        for (i = 0; i < jogador.length; i++) {
-            jogadorNaCasa = jogador[i];
-            posicaoMinima = 0;
-            for (int j = 0; j< jogador.length; j++) {
-                if (jogador[j].getPosicao() < jogador[posicaoMinima].getPosicao()) {
-                    posicaoMinima = j;
-                }
+        
+        // Find the player with minimum position
+        for (int j = 0; j < jogadores.length; j++) {
+            if (jogadores[j].getPosicao() < jogadores[posicaoMinima].getPosicao()) {
+                posicaoMinima = j;
             }
         }
 
-        int indiceJogadorNaCasa = i - 1;
-        Jogador ultimoJogador = jogador[posicaoMinima];
-        if (indiceJogadorNaCasa != posicaoMinima) {
-            int posicaoTemp = jogador[indiceJogadorNaCasa].getPosicao();
-            jogador[indiceJogadorNaCasa].setPosicao(jogador[posicaoMinima].getPosicao());
-            jogador[posicaoMinima].setPosicao(posicaoTemp);
-            System.out.println(jogadorNaCasa.getNome() + " trocou de posição com " + jogador[posicaoMinima].getNome());
+        Jogador ultimoJogador = jogadores[posicaoMinima];
+        if (jogadorEmCasa != ultimoJogador) {
+            int posicaoTemp = jogadorEmCasa.getPosicao();
+            jogadorEmCasa.setPosicao(ultimoJogador.getPosicao());
+            ultimoJogador.setPosicao(posicaoTemp);
+            System.out.println(jogadorEmCasa.getNome() + " trocou de posicao com " + ultimoJogador.getNome());
         } else {
-            System.out.println(jogadorNaCasa.getNome() + " está no ultimo lugar e não pode trocar de posição.");
+            System.out.println(jogadorEmCasa.getNome() + " esta no ultimo lugar e nao pode trocar de posicao.");
         }
-
     }
 
 }

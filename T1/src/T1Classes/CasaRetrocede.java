@@ -8,12 +8,12 @@ public class CasaRetrocede extends Casa {
     @Override
     public void acao(ContextoExecucao contexto) {
         super.acao(contexto);
+        System.out.println("Casa Retrocede! Voce retrocedeu para o inicio do tabuleiro!");
         retrocederJogador(contexto.getJogador());
     }
 
     public void retrocederJogador(Jogador jogador) {
         jogador.setPosicao(0);
-        System.out.println(jogador.getNome() + " retrocedeu para o inicio do tabuleiro!");
     }
 
 }
