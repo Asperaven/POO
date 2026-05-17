@@ -7,6 +7,7 @@ public class ContextoExecucao {
     private Jogador[] jogadores;
     private int escolha;
     private Scanner scanner;
+    private int previousPosition;
 
     public ContextoExecucao(Jogador jogador) {
         this.jogador = jogador;
@@ -29,6 +30,14 @@ public class ContextoExecucao {
         this.scanner = scanner;
     }
 
+    public ContextoExecucao(Jogador jogador, Jogador[] jogadores, int escolha, Scanner scanner, int previousPosition) {
+        this.jogador = jogador;
+        this.jogadores = jogadores;
+        this.escolha = escolha;
+        this.scanner = scanner;
+        this.previousPosition = previousPosition;
+    }
+
     public Jogador getJogador() {
         return jogador;
     }
@@ -43,6 +52,10 @@ public class ContextoExecucao {
 
     public Scanner getScanner() {
         return scanner;
+    }
+
+    public int getPreviousPosition() {
+        return previousPosition;
     }
 
 }

@@ -37,7 +37,8 @@ public class Jogo {
                     this.tabuleiro.imprimirTabuleiro(jogadores);
                     Thread.sleep(1000);
                     boolean resultadosIguais = false;
-
+                    int posicaoAnterior = jogadorAtual.getPosicao();
+                    
                     if(debug == true){
                         System.out.println("Modo Debug - Digite o numero da casa que o jogador " + jogadorAtual.getCor() + " deve ir: ");
                         int posicaoEscolhida = input.nextInt();
@@ -56,7 +57,7 @@ public class Jogo {
                         continuarJogando = false;
                         break;
                     } else {
-                        ContextoExecucao contexto = new ContextoExecucao(jogadorAtual, jogadores, 0, input);
+                        ContextoExecucao contexto = new ContextoExecucao(jogadorAtual, jogadores, 0, input, posicaoAnterior);
                         Casa casaAtual = tabuleiro.getCasa(indiceAtual);
                         casaAtual.acao(contexto);
                     }

@@ -34,7 +34,7 @@ public class Tabuleiro {
         return casas[posicao];
     }
 
-    //tabuleiro borda de quadrado
+    // tabuleiro borda de quadrado
     public void imprimirTabuleiro(Jogador[] jogadores){
         for (int i = 0; i <= 10; i++) {
             System.out.print(mostrarSimbolo(i, jogadores));
