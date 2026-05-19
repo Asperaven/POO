@@ -3,20 +3,22 @@ import java.io.*;
 
 public class Disciplina {
     private String nome;
-    private Provas[] provas;
+    private Aluno[] provas;
     private Gabarito gabarito;
+    private Nota nota;
 
-    public Disciplina(String nome, Provas[] provas, Gabarito gabarito) {
+    public Disciplina(String nome, Aluno[] provas, Gabarito gabarito) {
         this.nome = nome;
         this.provas = provas;
         this.gabarito = gabarito;
+        this.nota = new Nota(provas, gabarito);
     }
 
     public String getNome() {
         return nome;
     }
 
-    public Provas[] getProvas() {
+    public Aluno[] getProvas() {
         return provas;
     }
 
@@ -24,57 +26,45 @@ public class Disciplina {
         return gabarito;
     }
 
+    public Nota getNota() {
+        return nota;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public void setProvas(Provas[] provas) {
+    public void setProvas(Aluno[] provas) {
         this.provas = provas;
+        this.nota.setProvas(provas);
     }
 
     public void setGabarito(Gabarito gabarito) {
         this.gabarito = gabarito;
+        this.nota.setGabarito(gabarito);
     }
 
-
+    /**
+     * Delegates grading to Nota class.
+     */
     public void corrigirTodasAsProvas() {
-        for (Provas prova : provas) {
-            String[] respostasProva = prova.getRespostas();
-            String[] respostasGabarito = gabarito.getRespostas();
-            String respostasStr = String.join("", respostasProva);
-            
-            if (respostasStr.equals("VVVVVVVVVV") || respostasStr.equals("FFFFFFFFFF")) {
-                prova.setAcertos(0);
-            } else {
-                int acertos = 0;
-                for (int i = 0; i < respostasProva.length; i++) {
-                    if (respostasProva[i].equals(respostasGabarito[i])) {
-                        acertos++;
-                    }
-                }
-                prova.setAcertos(acertos);
-            }
-        }
+        nota.corrigirTodasAsProvas();
     }
 
-
+    /**
+     * Delegates average calculation to Nota class.
+     */
     public double calcularMediaTurma() {
-        corrigirTodasAsProvas();
-        int totalAcertos = 0;
-        for (Provas prova : provas) {
-            totalAcertos += prova.getAcertos();
-        }
-        double media = (double) totalAcertos / (provas.length * 10);
-        return media;
+        return nota.calcularMediaTurma();
     }
 
     public void ordenarAlfabeticamente() {
         corrigirTodasAsProvas();
-        Provas[] provasOrdenadas = provas.clone();
+        Aluno[] provasOrdenadas = provas.clone();
         for (int i = 0; i < provasOrdenadas.length - 1; i++) {
             for (int j = 0; j < provasOrdenadas.length - i - 1; j++) {
                 if (provasOrdenadas[j].getNome().compareTo(provasOrdenadas[j + 1].getNome()) > 0) {
-                    Provas temp = provasOrdenadas[j];
+                    Aluno temp = provasOrdenadas[j];
                     provasOrdenadas[j] = provasOrdenadas[j + 1];
                     provasOrdenadas[j + 1] = temp;
                 }
@@ -82,7 +72,7 @@ public class Disciplina {
         }
         try (FileWriter fw = new FileWriter(nome + ".txt");
             BufferedWriter bw = new BufferedWriter(fw)) {
-            for (Provas prova : provasOrdenadas) {
+            for (Aluno prova : provasOrdenadas) {
                 String respostas = String.join("", prova.getRespostas());
                 bw.write(respostas + "\t" + prova.getNome() + "\t" + prova.getAcertos());
                 bw.newLine();
@@ -94,11 +84,11 @@ public class Disciplina {
 
     public void ordernarPorAcertos() {
         corrigirTodasAsProvas();
-        Provas[] provasOrdenadas = provas.clone();
+        Aluno[] provasOrdenadas = provas.clone();
         for (int i = 0; i < provasOrdenadas.length - 1; i++) {
             for (int j = 0; j < provasOrdenadas.length - i - 1; j++) {
                 if (provasOrdenadas[j].getAcertos() < provasOrdenadas[j + 1].getAcertos()) {
-                    Provas temp = provasOrdenadas[j];
+                    Aluno temp = provasOrdenadas[j];
                     provasOrdenadas[j] = provasOrdenadas[j + 1];
                     provasOrdenadas[j + 1] = temp;
                 }
@@ -106,7 +96,7 @@ public class Disciplina {
         }
         try (FileWriter fw = new FileWriter(nome + ".txt");
             BufferedWriter bw = new BufferedWriter(fw)) {
-            for (Provas prova : provasOrdenadas) {
+            for (Aluno prova : provasOrdenadas) {
                 String respostas = String.join("", prova.getRespostas());
                 bw.write(respostas + "\t" + prova.getNome() + "\t" + prova.getAcertos());
                 bw.newLine();
