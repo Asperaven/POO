@@ -92,6 +92,22 @@ public class Main {
                         }
                     }
                 } else if (opcaoPrincipal == 2) {
+                    System.out.println("\nDeseja gerar os boletins dos alunos? (S/N)");
+                    String resposta = sc.nextLine().trim().toUpperCase();
+                    if (resposta.equals("S")) {
+                        GerarBoletim geradorBoletim = new GerarBoletim();
+                        geradorBoletim.processarArquivos();
+                        
+                        System.out.println("\nDeseja visualizar os boletins em uma interface grafica? (S/N)");
+                        String respostaGUI = sc.nextLine().trim().toUpperCase();
+                        if (respostaGUI.equals("S")) {
+                            System.out.println("Abrindo interface grafica...");
+                            System.out.println("Fechando console. Use a interface grafica para sair.\n");
+                    
+                            new InterfaceGrafica(new java.io.File(System.getProperty("user.dir")));
+                            return;
+                        }
+                    }
                     System.out.println("Saindo do sistema. Obrigado por usar!");
                     break;
                 } else {

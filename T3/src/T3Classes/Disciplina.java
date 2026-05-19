@@ -44,16 +44,10 @@ public class Disciplina {
         this.nota.setGabarito(gabarito);
     }
 
-    /**
-     * Delegates grading to Nota class.
-     */
     public void corrigirTodasAsProvas() {
         nota.corrigirTodasAsProvas();
     }
 
-    /**
-     * Delegates average calculation to Nota class.
-     */
     public double calcularMediaTurma() {
         return nota.calcularMediaTurma();
     }
