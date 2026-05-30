@@ -1,0 +1,50 @@
+package TFinalClasses;
+import java.util.*;
+
+public class Paciente {
+    private String nome;
+    private int idade;
+    private String planoSaude;
+    private ArrayList<Consulta> historico;
+
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public String getPlanoSaude() {
+        return planoSaude;
+    }
+
+    public void setPlanoSaude(String planoSaude) {
+        this.planoSaude = planoSaude;
+    }
+
+    public ArrayList<Consulta> getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(ArrayList<Consulta> historico) {
+        this.historico = historico;
+    }
+
+    public Paciente(String nome, int idade, String planoSaude) {
+        this.nome = nome;
+        this.idade = idade;
+        this.planoSaude = planoSaude;
+        this.historico = new ArrayList<>();
+    }
+
+}

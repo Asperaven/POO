@@ -21,7 +21,6 @@ public class CasaMagica extends Casa {
             System.out.println("Casa magica! Como voce esta em ultimo lugar, voce retorna para onde estava!");
             contexto.getJogador().setPosicao(contexto.getPreviousPosition());
         } else {
-            
             System.out.println("Casa magica! Trocou de posicao com o jogador mais atrasado!");
             trocarPosicao(contexto.getJogador(), contexto.getJogadores());
         }
