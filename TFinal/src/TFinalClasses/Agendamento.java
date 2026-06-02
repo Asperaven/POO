@@ -22,7 +22,7 @@ public class Agendamento {
         return LocalDate.now().equals(this.dataConsulta);
     }
 
-    private String caminho = "TFinal/src/TFinalArquivos/agendamentos/agendamentos.txt";
+    private String caminho = "src/TFinalArquivos/agendamentos/agendamentos.txt";
     public int contarAgendamentos() throws IOException {
         File arquivoAgendamento = new File(caminho);
         int contador = 0;

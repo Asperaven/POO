@@ -1,6 +1,10 @@
 package TFinalClasses;
 import TFinalExcecoes.PlanoInvalidoException;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public abstract class Medico {
@@ -9,16 +13,30 @@ public abstract class Medico {
     private double valorConsulta;
     private ArrayList<Avaliacao> avalicoes;
     private ArrayList<String> planosDeSaude;
+    private String senha;
 
-    public Medico(String nome, String especialidade, double valorConsulta) {
+    public Medico(String nome, String especialidade, double valorConsulta, String senha) {
         this.nome = nome;
         this.especialidade = especialidade;
         this.valorConsulta = valorConsulta;
         this.avalicoes = new ArrayList<>();
         this.planosDeSaude = new ArrayList<>();
+        this.senha = senha;
     }
     public void adicionarPlano(String plano) throws PlanoInvalidoException {
-        planosDeSaude.add(plano);
+        if(planoValido(plano)){
+            planosDeSaude.add(plano);
+        }
+    }
+
+    private String caminho = "src/TFinalArquivos/medicos/medicos.txt";
+    public void registrarMedico() throws IOException {
+        File arquivoMedicos = new File(caminho);
+
+        try(BufferedWriter escritor = new BufferedWriter(new FileWriter(arquivoMedicos, true))){
+            String planos = String.join(",", this.planosDeSaude);
+            escritor.write(this.nome + "\t" + this.senha + "\t" + this.especialidade + "\t" + this.valorConsulta + "\t" + planos + "\n");
+        }
     }
 
     public boolean planoValido(String plano){
@@ -47,4 +65,15 @@ public abstract class Medico {
         avalicoes.add(avaliacao);
     }
 
+    public ArrayList<String> getPlanosDeSaude() {
+        return planosDeSaude;
+    }
+
+    public void setPlanosDeSaude(ArrayList<String> planosDeSaude) {
+        this.planosDeSaude = planosDeSaude;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
 }
