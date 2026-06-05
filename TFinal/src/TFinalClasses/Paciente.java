@@ -1,4 +1,8 @@
 package TFinalClasses;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Paciente {
@@ -6,7 +10,7 @@ public class Paciente {
     private int idade;
     private String planoSaude;
     private ArrayList<Consulta> historico;
-
+    private String senha;
 
     public String getNome() {
         return nome;
@@ -40,11 +44,28 @@ public class Paciente {
         this.historico = historico;
     }
 
-    public Paciente(String nome, int idade, String planoSaude) {
+    public String getSenha() {
+        return senha;
+    }
+
+    public Paciente(String nome, int idade, String planoSaude, String senha) {
         this.nome = nome;
         this.idade = idade;
+        this.senha = senha;
         this.planoSaude = planoSaude;
         this.historico = new ArrayList<>();
     }
 
+    private String caminho = "src/TFinalArquivos/pacientes/pacientes.txt";
+    public void registrarPaciente() throws IOException {
+        File arquivoPacientes = new File(caminho);
+
+        try(BufferedWriter escritor = new BufferedWriter(new FileWriter(arquivoPacientes, true))){
+            escritor.write(this.nome + "\t" + this.idade + "\t" + this.senha + "\t" + this.planoSaude + "\n");
+        }
+    }
+
+    public void adicionarConsultaHistorico(Consulta consulta){
+        this.historico.add(consulta);
+    }
 }
