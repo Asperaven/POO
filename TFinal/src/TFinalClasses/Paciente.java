@@ -12,7 +12,6 @@ public class Paciente {
     private ArrayList<Consulta> historico;
     private String senha;
 
-
     public String getNome() {
         return nome;
     }
@@ -66,4 +65,7 @@ public class Paciente {
         }
     }
 
+    public void adicionarConsultaHistorico(Consulta consulta){
+        this.historico.add(consulta);
+    }
 }

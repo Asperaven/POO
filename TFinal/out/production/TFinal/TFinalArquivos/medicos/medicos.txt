@@ -1,2 +1,1 @@
-Dr.Marina	a1b2c3	Pediatria	250.0	Unimed,Hapvida
 João	a442d	Cardiologia	300.0	Unimed
