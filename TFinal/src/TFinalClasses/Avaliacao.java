@@ -28,7 +28,9 @@ public class Avaliacao {
     public int getEstrelas() {
         return estrelas;
     }
-    // Registrar avaliação num arquivo de texto, provavelmente no formato nomePaciente_nomeMedico_av.txt. 
+
+    // Registrar avaliação num arquivo de texto, provavelmente no formato
+    // nomePaciente_nomeMedico_av.txt.
     // Primeira linha: nome do médico
     // Segunda linha: nome do paciente
     // Terceira linha: descrição da avaliação (comentários, sugestões, etc.)
@@ -41,13 +43,13 @@ public class Avaliacao {
     }
 
     public void registrarAvaliacao() throws AvaliacaoInvalidaException {
-        if(this.estrelas < 1 || this.estrelas > 5){
+        if (this.estrelas < 1 || this.estrelas > 5) {
             throw new AvaliacaoInvalidaException();
         }
         String caminho = this.paciente.getNome() + "_" + this.medico.getNome() + "_av.txt";
         String diretorio = "TFinal/src/TFinalArquivos/avaliacoes/";
         File arquivoAvaliacao = new File(diretorio + caminho);
-        try(BufferedWriter escritor = new BufferedWriter(new FileWriter(arquivoAvaliacao))) {
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(arquivoAvaliacao))) {
             escritor.write("Medico: " + this.medico.getNome() + "\n");
             escritor.write("Paciente: " + this.paciente.getNome() + "\n");
             escritor.write("Descrição: " + this.descricao + "\n");
@@ -56,5 +58,10 @@ public class Avaliacao {
         } catch (IOException e) {
             System.out.println("Erro ao registrar avaliação: " + e.getMessage());
         }
+    }
+
+    @Override
+    public String toString() {
+        return medico.getNome() + " - " + estrelas + "★ - " + descricao;
     }
 }

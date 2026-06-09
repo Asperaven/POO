@@ -1,12 +1,13 @@
 package TFinalClasses;
+
 import java.util.*;
 
 public class Paciente {
     private String nome;
     private int idade;
     private String planoSaude;
+    private String senha;
     private ArrayList<Consulta> historico;
-
 
     public String getNome() {
         return nome;
@@ -44,7 +45,29 @@ public class Paciente {
         this.nome = nome;
         this.idade = idade;
         this.planoSaude = planoSaude;
+        this.senha = "";
         this.historico = new ArrayList<>();
     }
 
+    public Paciente(String nome, int idade, String planoSaude, String senha) {
+        this(nome, idade, planoSaude);
+        this.senha = senha;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public void adicionarConsulta(Consulta consulta) {
+        this.historico.add(consulta);
+    }
+
+    @Override
+    public String toString() {
+        return nome + " (" + idade + " anos, plano: " + (planoSaude.isEmpty() ? "Nenhum" : planoSaude) + ")";
+    }
 }
