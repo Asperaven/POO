@@ -26,6 +26,7 @@ public class DashboardPanel extends JPanel {
                 BorderFactory.createEmptyBorder(12, 24, 12, 24)));
 
         labelBoasVindas = MainFrame.criarLabel("Bem-vindo!", 18, true);
+        labelBoasVindas.setFont(new Font("Segoe UI Emoji", Font.BOLD, 18));
         header.add(labelBoasVindas, BorderLayout.WEST);
 
         JButton botaoLogout = MainFrame.criarBotao("Sair", MainFrame.COR_ERRO);
@@ -49,11 +50,11 @@ public class DashboardPanel extends JPanel {
 
         if (usuario instanceof Paciente) {
             Paciente p = (Paciente) usuario;
-            labelBoasVindas.setText("👋 Olá, " + p.getNome() + "!");
+            labelBoasVindas.setText("🙋 Olá, " + p.getNome() + "!");
             criarMenuPaciente();
         } else if (usuario instanceof Medico) {
             Medico m = (Medico) usuario;
-            labelBoasVindas.setText("👋 Olá, Dr(a). " + m.getNome() + "!");
+            labelBoasVindas.setText("🧑‍⚕️ Olá, Dr(a). " + m.getNome() + "!");
             criarMenuMedico();
         }
 
@@ -126,18 +127,19 @@ public class DashboardPanel extends JPanel {
     }
 
     private JPanel criarCardMenu(String emoji, String titulo, String descricao,
-            Color corAccent, Runnable acao) {
+            Color corDetalhes, Runnable acao) {
         JPanel card = MainFrame.criarPainelCard();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // Borda colorida no topo
         card.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createMatteBorder(3, 0, 0, 0, corAccent),
+                BorderFactory.createMatteBorder(3, 0, 0, 0, corDetalhes),
                 BorderFactory.createEmptyBorder(20, 20, 20, 20)));
 
         JLabel labelEmoji = new JLabel(emoji);
         labelEmoji.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 36));
+        labelEmoji.setForeground(MainFrame.COR_PRIMARIA);
         labelEmoji.setAlignmentX(Component.LEFT_ALIGNMENT);
         card.add(labelEmoji);
         card.add(Box.createVerticalStrut(12));
@@ -152,7 +154,7 @@ public class DashboardPanel extends JPanel {
         labelDescricao.setAlignmentX(Component.LEFT_ALIGNMENT);
         card.add(labelDescricao);
 
-        // Hover effect
+        // Efeito hover
         Color corOriginal = MainFrame.COR_PAINEL;
         Color corHover = MainFrame.COR_CARD;
         card.addMouseListener(new java.awt.event.MouseAdapter() {

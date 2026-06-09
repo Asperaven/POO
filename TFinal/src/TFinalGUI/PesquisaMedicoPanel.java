@@ -149,13 +149,13 @@ public class PesquisaMedicoPanel extends JPanel {
         tabela.setShowVerticalLines(false);
         tabela.setIntercellSpacing(new Dimension(0, 1));
 
-        // Header styling
+        // Estilo do header
         tabela.getTableHeader().setBackground(MainFrame.COR_CARD);
         tabela.getTableHeader().setForeground(MainFrame.COR_TEXTO);
         tabela.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
         tabela.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, MainFrame.COR_BORDA));
 
-        // Cell renderer
+        // Renderização de tabela
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 12));
         for (int i = 0; i < tabela.getColumnCount(); i++) {

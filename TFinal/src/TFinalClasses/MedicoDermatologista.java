@@ -19,7 +19,7 @@ public class MedicoDermatologista extends Medico {
 
     @Override
     public void adicionarPlano(String plano) throws PlanoInvalidoException {
-        if(this.planoValido(plano)){
+        if (this.planoValido(plano)) {
             super.adicionarPlano(plano);
         } else {
             throw new PlanoInvalidoException("O médico dermatologista atende apenas os planos Unimed e Hapvida!");

@@ -4,8 +4,13 @@ import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new MainFrame();
-        });
+        try {
+            SwingUtilities.invokeLater(() -> {
+                new MainFrame();
+            });
+        } catch (Exception e) {
+            System.err.println("Erro ao iniciar a aplicação:");
+            e.printStackTrace();
+        }
     }
 }

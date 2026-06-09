@@ -47,7 +47,7 @@ public class MainFrame extends JFrame {
         sistema = new SistemaClinica("TFinal/src/TFinalArquivos");
         sistema.criarDadosIniciais();
 
-        setTitle("🏥 Clínica Médica — Sistema de Gestão");
+        setTitle("Clínica Médica — Sistema de Gestão");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(960, 680);
         setMinimumSize(new Dimension(800, 600));
@@ -171,7 +171,6 @@ public class MainFrame extends JFrame {
         campo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         campo.setPreferredSize(new Dimension(300, 40));
 
-        // Placeholder
         campo.setText(placeholder);
         campo.setForeground(COR_TEXTO_SECUNDARIO);
         campo.addFocusListener(new java.awt.event.FocusAdapter() {

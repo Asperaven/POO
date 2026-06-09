@@ -35,6 +35,7 @@ public class LoginPanel extends JPanel {
         JLabel icone = new JLabel("🏥", SwingConstants.CENTER);
         icone.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 48));
         icone.setAlignmentX(Component.CENTER_ALIGNMENT);
+        icone.setForeground(MainFrame.COR_PRIMARIA);
         cardLogin.add(icone);
         cardLogin.add(Box.createVerticalStrut(8));
 
