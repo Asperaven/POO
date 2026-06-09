@@ -152,6 +152,7 @@ public class EstatisticasPanel extends JPanel {
                 JLabel labelEmoji = new JLabel(emoji);
                 labelEmoji.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 24));
                 labelEmoji.setAlignmentX(Component.LEFT_ALIGNMENT);
+                labelEmoji.setForeground(MainFrame.COR_PRIMARIA);
                 card.add(labelEmoji);
                 card.add(Box.createVerticalStrut(6));
 

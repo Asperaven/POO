@@ -2,12 +2,12 @@ package TFinalGUI;
 
 import TFinalClasses.*;
 import TFinalExcecoes.AvaliacaoInvalidaException;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.*;
 
 public class AvaliacaoPanel extends JPanel {
+
     private MainFrame mainFrame;
     private JComboBox<String> comboConsultas;
     private JTextArea areaComentario;
@@ -26,13 +26,20 @@ public class AvaliacaoPanel extends JPanel {
     }
 
     private void criarInterface() {
-        JPanel header = PesquisaMedicoPanel.criarHeaderComVoltar("⭐ Avaliações", mainFrame);
+        JPanel header = PesquisaMedicoPanel.criarHeaderComVoltar(
+            "⭐ Avaliações",
+            mainFrame
+        );
         add(header, BorderLayout.NORTH);
 
         painelConteudo = new JPanel();
         painelConteudo.setBackground(MainFrame.COR_FUNDO);
-        painelConteudo.setLayout(new BoxLayout(painelConteudo, BoxLayout.Y_AXIS));
-        painelConteudo.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+        painelConteudo.setLayout(
+            new BoxLayout(painelConteudo, BoxLayout.Y_AXIS)
+        );
+        painelConteudo.setBorder(
+            BorderFactory.createEmptyBorder(20, 40, 20, 40)
+        );
 
         JScrollPane scroll = new JScrollPane(painelConteudo);
         scroll.setBackground(MainFrame.COR_FUNDO);
@@ -66,7 +73,11 @@ public class AvaliacaoPanel extends JPanel {
         card.add(Box.createVerticalStrut(16));
 
         // Selecionar consulta
-        JLabel labelConsulta = MainFrame.criarLabel("Selecione a consulta:", 14, false);
+        JLabel labelConsulta = MainFrame.criarLabel(
+            "Selecione a consulta:",
+            14,
+            false
+        );
         labelConsulta.setAlignmentX(Component.LEFT_ALIGNMENT);
         card.add(labelConsulta);
         card.add(Box.createVerticalStrut(4));
@@ -78,13 +89,21 @@ public class AvaliacaoPanel extends JPanel {
         comboConsultas.setMaximumSize(new Dimension(660, 40));
         comboConsultas.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        consultasDisponiveis = mainFrame.getSistema().getConsultasPaciente(paciente);
+        consultasDisponiveis = mainFrame
+            .getSistema()
+            .getConsultasPaciente(paciente);
         if (consultasDisponiveis.isEmpty()) {
             comboConsultas.addItem("Nenhuma consulta realizada");
         } else {
             for (Consulta c : consultasDisponiveis) {
-                comboConsultas.addItem(c.getData() + " — " + c.getMedico().getNome()
-                        + " (" + c.getMedico().getEspecialidade() + ")");
+                comboConsultas.addItem(
+                    c.getData() +
+                        " — " +
+                        c.getMedico().getNome() +
+                        " (" +
+                        c.getMedico().getEspecialidade() +
+                        ")"
+                );
             }
         }
         card.add(comboConsultas);
@@ -103,26 +122,32 @@ public class AvaliacaoPanel extends JPanel {
         labelEstrelas = new JLabel[5];
         for (int i = 0; i < 5; i++) {
             final int nota = i + 1;
-            labelEstrelas[i] = new JLabel("☆");
-            labelEstrelas[i].setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+            labelEstrelas[i] = new JLabel("\u2606");
+            labelEstrelas[i].setFont(
+                new Font("Segoe UI Symbol", Font.PLAIN, 32)
+            );
             labelEstrelas[i].setForeground(new Color(250, 204, 21));
             labelEstrelas[i].setCursor(new Cursor(Cursor.HAND_CURSOR));
-            labelEstrelas[i].addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    estrelaSelecionada = nota;
-                    atualizarEstrelas();
-                }
+            labelEstrelas[i].addMouseListener(
+                new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        estrelaSelecionada = nota;
+                        atualizarEstrelas();
+                    }
 
-                public void mouseEntered(java.awt.event.MouseEvent e) {
-                    for (int j = 0; j < 5; j++) {
-                        labelEstrelas[j].setText(j < nota ? "★" : "☆");
+                    public void mouseEntered(java.awt.event.MouseEvent e) {
+                        for (int j = 0; j < 5; j++) {
+                            labelEstrelas[j].setText(
+                                j < nota ? "\u2605" : "\u2606"
+                            );
+                        }
+                    }
+
+                    public void mouseExited(java.awt.event.MouseEvent e) {
+                        atualizarEstrelas();
                     }
                 }
-
-                public void mouseExited(java.awt.event.MouseEvent e) {
-                    atualizarEstrelas();
-                }
-            });
+            );
             painelEstrelas.add(labelEstrelas[i]);
         }
         card.add(painelEstrelas);
@@ -139,12 +164,17 @@ public class AvaliacaoPanel extends JPanel {
         JScrollPane scrollComentario = new JScrollPane(areaComentario);
         scrollComentario.setMaximumSize(new Dimension(660, 120));
         scrollComentario.setAlignmentX(Component.LEFT_ALIGNMENT);
-        scrollComentario.setBorder(BorderFactory.createLineBorder(MainFrame.COR_BORDA));
+        scrollComentario.setBorder(
+            BorderFactory.createLineBorder(MainFrame.COR_BORDA)
+        );
         card.add(scrollComentario);
         card.add(Box.createVerticalStrut(20));
 
         // Botão enviar
-        JButton botaoEnviar = MainFrame.criarBotao("⭐ Enviar Avaliação", new Color(250, 204, 21).darker());
+        JButton botaoEnviar = MainFrame.criarBotao(
+            "⭐ Enviar Avaliação",
+            new Color(250, 204, 21).darker()
+        );
         botaoEnviar.setAlignmentX(Component.LEFT_ALIGNMENT);
         botaoEnviar.addActionListener(e -> enviarAvaliacao());
         card.add(botaoEnviar);
@@ -165,8 +195,10 @@ public class AvaliacaoPanel extends JPanel {
 
         double media = medico.getMediaEstrelas();
         JLabel labelNota = MainFrame.criarLabel(
-                media > 0 ? String.format("%.1f ★", media) : "Sem avaliações",
-                20, true);
+            media > 0 ? String.format("%.1f \u2605", media) : "Sem avaliações",
+            20,
+            true
+        );
         labelNota.setForeground(new Color(250, 204, 21));
         linhaMedia.add(labelNota);
         linhaMedia.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -176,7 +208,11 @@ public class AvaliacaoPanel extends JPanel {
         // Lista de avaliações
         ArrayList<Avaliacao> avaliacoes = medico.getAvalicoes();
         if (avaliacoes.isEmpty()) {
-            JLabel labelVazio = MainFrame.criarLabel("Nenhuma avaliação recebida ainda.", 14, false);
+            JLabel labelVazio = MainFrame.criarLabel(
+                "Nenhuma avaliação recebida ainda.",
+                14,
+                false
+            );
             labelVazio.setForeground(MainFrame.COR_TEXTO_SECUNDARIO);
             labelVazio.setAlignmentX(Component.LEFT_ALIGNMENT);
             card.add(labelVazio);
@@ -185,26 +221,38 @@ public class AvaliacaoPanel extends JPanel {
                 JPanel cardAv = new JPanel();
                 cardAv.setLayout(new BoxLayout(cardAv, BoxLayout.Y_AXIS));
                 cardAv.setBackground(MainFrame.COR_CARD);
-                cardAv.setBorder(BorderFactory.createCompoundBorder(
+                cardAv.setBorder(
+                    BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(MainFrame.COR_BORDA),
-                        BorderFactory.createEmptyBorder(12, 16, 12, 16)));
+                        BorderFactory.createEmptyBorder(12, 16, 12, 16)
+                    )
+                );
                 cardAv.setMaximumSize(new Dimension(660, 100));
                 cardAv.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-                JPanel linhaAv = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+                JPanel linhaAv = new JPanel(
+                    new FlowLayout(FlowLayout.LEFT, 8, 0)
+                );
                 linhaAv.setBackground(MainFrame.COR_CARD);
-                linhaAv.add(MainFrame.criarLabel(av.getPaciente().getNome(), 14, true));
+                linhaAv.add(
+                    MainFrame.criarLabel(av.getPaciente().getNome(), 14, true)
+                );
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < 5; i++)
-                    sb.append(i < av.getEstrelas() ? "★" : "☆");
+                for (int i = 0; i < 5; i++) sb.append(
+                    i < av.getEstrelas() ? "\u2605" : "\u2606"
+                );
                 JLabel estrelas = new JLabel(sb.toString());
                 estrelas.setForeground(new Color(250, 204, 21));
-                estrelas.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 16));
+                estrelas.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 16));
                 linhaAv.add(estrelas);
                 linhaAv.setAlignmentX(Component.LEFT_ALIGNMENT);
                 cardAv.add(linhaAv);
 
-                JLabel labelDesc = MainFrame.criarLabel("\"" + av.getDescricao() + "\"", 13, false);
+                JLabel labelDesc = MainFrame.criarLabel(
+                    "\"" + av.getDescricao() + "\"",
+                    13,
+                    false
+                );
                 labelDesc.setForeground(MainFrame.COR_TEXTO_SECUNDARIO);
                 labelDesc.setAlignmentX(Component.LEFT_ALIGNMENT);
                 cardAv.add(labelDesc);
@@ -219,53 +267,75 @@ public class AvaliacaoPanel extends JPanel {
 
     private void atualizarEstrelas() {
         for (int i = 0; i < 5; i++) {
-            labelEstrelas[i].setText(i < estrelaSelecionada ? "★" : "☆");
+            labelEstrelas[i].setText(
+                i < estrelaSelecionada ? "\u2605" : "\u2606"
+            );
         }
     }
 
     private void enviarAvaliacao() {
         if (consultasDisponiveis.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Você não tem consultas para avaliar.",
-                    "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(
+                this,
+                "Você não tem consultas para avaliar.",
+                "Aviso",
+                JOptionPane.WARNING_MESSAGE
+            );
             return;
         }
 
         if (estrelaSelecionada == 0) {
-            JOptionPane.showMessageDialog(this,
-                    "Selecione uma nota de 1 a 5 estrelas.",
-                    "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(
+                this,
+                "Selecione uma nota de 1 a 5 estrelas.",
+                "Aviso",
+                JOptionPane.WARNING_MESSAGE
+            );
             return;
         }
 
         String comentario = areaComentario.getText().trim();
         if (comentario.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Escreva um comentário sobre a consulta.",
-                    "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(
+                this,
+                "Escreva um comentário sobre a consulta.",
+                "Aviso",
+                JOptionPane.WARNING_MESSAGE
+            );
             return;
         }
 
         int idx = comboConsultas.getSelectedIndex();
-        if (idx < 0 || idx >= consultasDisponiveis.size())
-            return;
+        if (idx < 0 || idx >= consultasDisponiveis.size()) return;
 
         Consulta consulta = consultasDisponiveis.get(idx);
         Paciente paciente = (Paciente) mainFrame.getUsuarioLogado();
 
         try {
-            mainFrame.getSistema().registrarAvaliacao(
-                    consulta.getMedico(), paciente, comentario, estrelaSelecionada);
-            JOptionPane.showMessageDialog(this,
-                    "Avaliação enviada com sucesso!",
-                    "Sucesso ⭐", JOptionPane.INFORMATION_MESSAGE);
+            mainFrame
+                .getSistema()
+                .registrarAvaliacao(
+                    consulta.getMedico(),
+                    paciente,
+                    comentario,
+                    estrelaSelecionada
+                );
+            JOptionPane.showMessageDialog(
+                this,
+                "Avaliação enviada com sucesso!",
+                "Sucesso ⭐",
+                JOptionPane.INFORMATION_MESSAGE
+            );
             estrelaSelecionada = 0;
             atualizarEstrelas();
             areaComentario.setText("");
         } catch (AvaliacaoInvalidaException ex) {
-            JOptionPane.showMessageDialog(this,
-                    ex.getMessage(),
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                this,
+                ex.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 }

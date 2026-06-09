@@ -1,14 +1,14 @@
 package TFinalGUI;
 
 import TFinalClasses.*;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class PesquisaMedicoPanel extends JPanel {
+
     private MainFrame mainFrame;
     private JTextField campoBusca;
     private JTable tabelaResultados;
@@ -37,11 +37,16 @@ public class PesquisaMedicoPanel extends JPanel {
         JPanel barraBusca = new JPanel(new BorderLayout(12, 0));
         barraBusca.setBackground(MainFrame.COR_FUNDO);
 
-        campoBusca = MainFrame.criarCampoTexto("Buscar por nome ou especialidade...");
+        campoBusca = MainFrame.criarCampoTexto(
+            "Buscar por nome ou especialidade..."
+        );
         campoBusca.setPreferredSize(new Dimension(400, 42));
         barraBusca.add(campoBusca, BorderLayout.CENTER);
 
-        JButton botaoBuscar = MainFrame.criarBotao("Buscar", MainFrame.COR_PRIMARIA);
+        JButton botaoBuscar = MainFrame.criarBotao(
+            "Buscar",
+            MainFrame.COR_PRIMARIA
+        );
         botaoBuscar.setPreferredSize(new Dimension(120, 42));
         botaoBuscar.addActionListener(e -> realizarBusca());
         barraBusca.add(botaoBuscar, BorderLayout.EAST);
@@ -49,7 +54,12 @@ public class PesquisaMedicoPanel extends JPanel {
         centro.add(barraBusca, BorderLayout.NORTH);
 
         // Tabela de resultados
-        String[] colunas = { "Nome", "Especialidade", "Avaliação", "Valor (R$)" };
+        String[] colunas = {
+            "Nome",
+            "Especialidade",
+            "Avaliação",
+            "Valor (R$)",
+        };
         modeloTabela = new DefaultTableModel(colunas, 0) {
             public boolean isCellEditable(int row, int col) {
                 return false;
@@ -65,13 +75,19 @@ public class PesquisaMedicoPanel extends JPanel {
         // Botão agendar
         JPanel rodape = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rodape.setBackground(MainFrame.COR_FUNDO);
-        JButton botaoAgendar = MainFrame.criarBotao("📅 Agendar Consulta", MainFrame.COR_SUCESSO);
+        JButton botaoAgendar = MainFrame.criarBotao(
+            "📅 Agendar Consulta",
+            MainFrame.COR_SUCESSO
+        );
         botaoAgendar.addActionListener(e -> {
             int linhaSelecionada = tabelaResultados.getSelectedRow();
             if (linhaSelecionada < 0) {
-                JOptionPane.showMessageDialog(this,
-                        "Selecione um médico para agendar.",
-                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Selecione um médico para agendar.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE
+                );
                 return;
             }
             Medico medicoSelecionado = resultados.get(linhaSelecionada);
@@ -88,7 +104,10 @@ public class PesquisaMedicoPanel extends JPanel {
     }
 
     private void realizarBusca() {
-        String termo = MainFrame.getTextoOuVazio(campoBusca, "Buscar por nome ou especialidade...");
+        String termo = MainFrame.getTextoOuVazio(
+            campoBusca,
+            "Buscar por nome ou especialidade..."
+        );
         Object usuario = mainFrame.getUsuarioLogado();
         String plano = "";
         if (usuario instanceof Paciente) {
@@ -98,12 +117,15 @@ public class PesquisaMedicoPanel extends JPanel {
         modeloTabela.setRowCount(0);
         for (Medico m : resultados) {
             double media = m.getMediaEstrelas();
-            String estrelas = media > 0 ? String.format("%.1f ★", media) : "Sem avaliações";
+            String estrelas =
+                media > 0
+                    ? String.format("%.1f \u2605", media)
+                    : "Sem avaliações";
             modeloTabela.addRow(new Object[] {
-                    m.getNome(),
-                    m.getEspecialidade(),
-                    estrelas,
-                    String.format("%.2f", m.getValorConsulta())
+                m.getNome(),
+                m.getEspecialidade(),
+                estrelas,
+                String.format("%.2f", m.getValorConsulta()),
             });
         }
     }
@@ -113,9 +135,18 @@ public class PesquisaMedicoPanel extends JPanel {
     static JPanel criarHeader(String titulo) {
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(MainFrame.COR_PAINEL);
-        header.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createMatteBorder(0, 0, 1, 0, MainFrame.COR_BORDA),
-                BorderFactory.createEmptyBorder(12, 24, 12, 24)));
+        header.setBorder(
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(
+                    0,
+                    0,
+                    1,
+                    0,
+                    MainFrame.COR_BORDA
+                ),
+                BorderFactory.createEmptyBorder(12, 24, 12, 24)
+            )
+        );
         JLabel label = MainFrame.criarLabel(titulo, 18, true);
         header.add(label, BorderLayout.WEST);
         return header;
@@ -124,15 +155,29 @@ public class PesquisaMedicoPanel extends JPanel {
     static JPanel criarHeaderComVoltar(String titulo, MainFrame mainFrame) {
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(MainFrame.COR_PAINEL);
-        header.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createMatteBorder(0, 0, 1, 0, MainFrame.COR_BORDA),
-                BorderFactory.createEmptyBorder(12, 24, 12, 24)));
+        header.setBorder(
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(
+                    0,
+                    0,
+                    1,
+                    0,
+                    MainFrame.COR_BORDA
+                ),
+                BorderFactory.createEmptyBorder(12, 24, 12, 24)
+            )
+        );
         JLabel label = MainFrame.criarLabel(titulo, 18, true);
         header.add(label, BorderLayout.WEST);
 
-        JButton botaoVoltar = MainFrame.criarBotao("← Voltar", MainFrame.COR_CARD);
+        JButton botaoVoltar = MainFrame.criarBotao(
+            "← Voltar",
+            MainFrame.COR_CARD
+        );
         botaoVoltar.setPreferredSize(new Dimension(120, 36));
-        botaoVoltar.addActionListener(e -> mainFrame.mostrarTela(MainFrame.DASHBOARD));
+        botaoVoltar.addActionListener(e ->
+            mainFrame.mostrarTela(MainFrame.DASHBOARD)
+        );
         header.add(botaoVoltar, BorderLayout.EAST);
         return header;
     }
@@ -145,7 +190,7 @@ public class PesquisaMedicoPanel extends JPanel {
         tabela.setSelectionBackground(MainFrame.COR_PRIMARIA.darker());
         tabela.setSelectionForeground(Color.WHITE);
         tabela.setRowHeight(36);
-        tabela.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tabela.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
         tabela.setShowVerticalLines(false);
         tabela.setIntercellSpacing(new Dimension(0, 1));
 
@@ -153,7 +198,11 @@ public class PesquisaMedicoPanel extends JPanel {
         tabela.getTableHeader().setBackground(MainFrame.COR_CARD);
         tabela.getTableHeader().setForeground(MainFrame.COR_TEXTO);
         tabela.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
-        tabela.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, MainFrame.COR_BORDA));
+        tabela
+            .getTableHeader()
+            .setBorder(
+                BorderFactory.createMatteBorder(0, 0, 1, 0, MainFrame.COR_BORDA)
+            );
 
         // Renderização de tabela
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
