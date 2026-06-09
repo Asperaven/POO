@@ -12,7 +12,6 @@ public class Paciente {
     private String planoSaude;
     private String senha;
     private ArrayList<Consulta> historico;
-    private String senha;
 
     public String getNome() {
         return nome;
@@ -53,9 +52,8 @@ public class Paciente {
     public Paciente(String nome, int idade, String planoSaude, String senha) {
         this.nome = nome;
         this.idade = idade;
-        this.senha = senha;
         this.planoSaude = planoSaude;
-        this.senha = "";
+        this.senha = senha;
         this.historico = new ArrayList<>();
     }
 

@@ -222,7 +222,7 @@ public class SistemaClinica {
                 if (medico != null && paciente != null) {
                     Consulta c = new Consulta(medico, paciente, data, descricao, receita, exames, valor);
                     consultas.add(c);
-                    paciente.adicionarConsulta(c);
+                    paciente.adicionarConsultaHistorico(c);
                 }
             } catch (IOException e) {
                 System.out.println("Erro ao carregar consulta: " + e.getMessage());
@@ -427,7 +427,7 @@ public class SistemaClinica {
         Consulta consulta = new Consulta(medico, paciente, data, descricao, receita, exames, valor);
         consulta.registrarConsulta();
         consultas.add(consulta);
-        paciente.adicionarConsulta(consulta);
+        paciente.adicionarConsultaHistorico(consulta);
 
         // Remover agendamento correspondente de hoje
         Agendamento paraRemover = null;

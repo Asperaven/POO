@@ -7,10 +7,6 @@ public class MedicoDermatologista extends Medico {
         super(nome, "Dermatologia", valorConsulta, senha);
     }
 
-    public MedicoDermatologista(String nome, double valorConsulta, String senha) {
-        super(nome, "Dermatologia", valorConsulta, senha);
-    }
-
     @Override
     public int getPacientesPorDia() {
         return 3;

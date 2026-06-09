@@ -3,9 +3,7 @@ package TFinalClasses;
 import TFinalExcecoes.AgendaLotadaException;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Agendamento {
     private Medico medico;

@@ -15,13 +15,11 @@ public abstract class Medico {
     private String senha;
     private ArrayList<Avaliacao> avalicoes;
     private ArrayList<String> planosDeSaude;
-    private String senha;
 
     public Medico(String nome, String especialidade, double valorConsulta, String senha) {
         this.nome = nome;
         this.especialidade = especialidade;
         this.valorConsulta = valorConsulta;
-        this.senha = "";
         this.avalicoes = new ArrayList<>();
         this.planosDeSaude = new ArrayList<>();
         this.senha = senha;
@@ -30,18 +28,6 @@ public abstract class Medico {
     public void adicionarPlano(String plano) throws PlanoInvalidoException {
         if (planoValido(plano)) {
             planosDeSaude.add(plano);
-        }
-    }
-
-    private String caminho = "src/TFinalArquivos/medicos/medicos.txt";
-
-    public void registrarMedico() throws IOException {
-        File arquivoMedicos = new File(caminho);
-
-        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(arquivoMedicos, true))) {
-            String planos = String.join(",", this.planosDeSaude);
-            escritor.write(this.nome + "\t" + this.senha + "\t" + this.especialidade + "\t" + this.valorConsulta + "\t"
-                    + planos + "\n");
         }
     }
 
@@ -81,6 +67,17 @@ public abstract class Medico {
 
     public void adicionarAvaliacao(Avaliacao avaliacao) {
         avalicoes.add(avaliacao);
+    }
+
+    public double getMediaEstrelas() {
+        if (avalicoes == null || avalicoes.isEmpty()) {
+            return 0.0;
+        }
+        double soma = 0;
+        for (Avaliacao a : avalicoes) {
+            soma += a.getEstrelas();
+        }
+        return soma / avalicoes.size();
     }
 
     public ArrayList<String> getPlanosDeSaude() {
