@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class DBConnection {
 
     private static Connection instance;
-    private final static String URL = "jdbc:sqlite:clinica_medica.db";
+    private final static String URL = "JDBC:sqlite:clinica_medica.db";
 
     private DBConnection(){
     }

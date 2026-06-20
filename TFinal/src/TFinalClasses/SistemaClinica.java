@@ -1,5 +1,6 @@
 package TFinalClasses;
 
+import TFinalDados.*;
 import TFinalExcecoes.*;
 
 import java.io.*;
@@ -21,6 +22,12 @@ public class SistemaClinica {
 
     private String basePath;
 
+    private PacienteDAO pacienteDAO = new PacienteDAO();
+    private MedicoDAO medicoDAO = new MedicoDAO();
+    private ConsultaDAO consultaDAO = new ConsultaDAO();
+    private AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
+    private AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO();
+
     public SistemaClinica(String basePath) {
         this.basePath = basePath;
         this.medicos = new ArrayList<>();
@@ -29,16 +36,25 @@ public class SistemaClinica {
         this.consultas = new ArrayList<>();
         this.listasEspera = new HashMap<>();
         carregarDados();
+        criarDadosIniciais();
     }
 
     // ==================== PERSISTÊNCIA ====================
 
     private void carregarDados() {
-        carregarMedicos();
-        carregarPacientes();
-        carregarAgendamentos();
-        carregarConsultas();
+//        carregarMedicos();
+//        carregarPacientes();
+//        carregarAgendamentos();
+//        carregarConsultas();
+        this.medicos = medicoDAO.buscarMedicos();
+        this.pacientes = pacienteDAO.buscarPacientes();
+        this.agendamentos = agendamentoDAO.buscarAgendamentos(this.pacientes, this.medicos);
+        this.consultas = consultaDAO.buscarConsultas(this.pacientes, this.medicos);
+
         carregarListaEspera();
+        //teste
+        ArrayList<Paciente> pacientesDB = pacienteDAO.buscarPacientes();
+        System.out.println(pacientesDB.size());
     }
 
     private void carregarMedicos() {
@@ -300,6 +316,10 @@ public class SistemaClinica {
         Paciente p = new Paciente(nome, idade, plano, senha);
         pacientes.add(p);
         salvarPacientes();
+
+        //teste de cadastro no DB
+        pacienteDAO.cadastrarPaciente(p);
+        System.out.println("Paciente cadastrado no banco de dados!");
     }
 
     public void cadastrarMedico(String nome, double valor, String senha, String tipo) {
@@ -586,5 +606,6 @@ public class SistemaClinica {
         cadastrarPaciente("Erick", 20, "Unimed", "1234");
         cadastrarPaciente("Livia", 19, "Hapvida", "1234");
         cadastrarPaciente("Enderson", 21, "", "1234");
+        cadastrarPaciente("Maria", 18, "Unimed", "1234");
     }
 }
