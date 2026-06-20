@@ -89,11 +89,25 @@ public class AvaliacaoPanel extends JPanel {
         comboConsultas.setMaximumSize(new Dimension(660, 40));
         comboConsultas.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        consultasDisponiveis = mainFrame
+        ArrayList<Consulta> todasConsultas = mainFrame
             .getSistema()
             .getConsultasPaciente(paciente);
+        consultasDisponiveis = new ArrayList<>();
+        for (Consulta c : todasConsultas) {
+            boolean jaAvaliado = false;
+            for (Avaliacao av : c.getMedico().getAvalicoes()) {
+                if (av.getPaciente().getNome().equals(paciente.getNome())) {
+                    jaAvaliado = true;
+                    break;
+                }
+            }
+            if (!jaAvaliado) {
+                consultasDisponiveis.add(c);
+            }
+        }
+
         if (consultasDisponiveis.isEmpty()) {
-            comboConsultas.addItem("Nenhuma consulta realizada");
+            comboConsultas.addItem("Nenhuma consulta pendente de avaliação");
         } else {
             for (Consulta c : consultasDisponiveis) {
                 comboConsultas.addItem(
@@ -329,11 +343,20 @@ public class AvaliacaoPanel extends JPanel {
             estrelaSelecionada = 0;
             atualizarEstrelas();
             areaComentario.setText("");
+            atualizar();
         } catch (AvaliacaoInvalidaException ex) {
             JOptionPane.showMessageDialog(
                 this,
                 ex.getMessage(),
                 "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Erro ao registrar avaliação no banco de dados: " +
+                    ex.getMessage(),
+                "Erro no Banco de Dados",
                 JOptionPane.ERROR_MESSAGE
             );
         }

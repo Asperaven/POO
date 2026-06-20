@@ -1,12 +1,9 @@
 package TFinalClasses;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 public class Paciente {
+
     private String nome;
     private int idade;
     private String planoSaude;

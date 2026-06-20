@@ -1,8 +1,8 @@
 import TFinalGUI.MainFrame;
-
 import javax.swing.SwingUtilities;
 
 public class Main {
+
     public static void main(String[] args) {
         TFinalDados.DBConnection.getConnection();
         try {

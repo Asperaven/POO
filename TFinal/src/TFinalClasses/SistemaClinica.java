@@ -42,37 +42,18 @@ public class SistemaClinica {
     // ==================== PERSISTÊNCIA ====================
 
     private void carregarDados() {
-        carregarMedicos();
-        carregarPacientes();
-        carregarAgendamentos();
-        carregarConsultas();
         this.medicos = medicoDAO.buscarMedicos();
         this.pacientes = pacienteDAO.buscarPacientes();
         this.agendamentos = agendamentoDAO.buscarAgendamentos(this.pacientes, this.medicos);
         this.consultas = consultaDAO.buscarConsultas(this.pacientes, this.medicos);
 
+        // Carregar avaliações
+        ArrayList<Avaliacao> avaliacoes = avaliacaoDAO.buscarAvaliacoes(this.pacientes, this.medicos);
+        for (Avaliacao av : avaliacoes) {
+            av.getMedico().adicionarAvaliacao(av);
+        }
+
         carregarListaEspera();
-        //teste
-        ArrayList<Paciente> pacientesDB = pacienteDAO.buscarPacientes();
-        System.out.println(pacientesDB.size());
-    }
-
-    private void carregarMedicos() {
-        this.medicos = medicoDAO.buscarMedicos();
-    }
-
-
-    private void carregarPacientes() {
-        this.pacientes = pacienteDAO.buscarPacientes();
-    }
-
-
-    private void carregarAgendamentos() {
-        this.agendamentos = agendamentoDAO.buscarAgendamentos(pacientes, medicos);
-    }
-
-    private void carregarConsultas() {
-        this.consultas = consultaDAO.buscarConsultas(pacientes, medicos);
     }
 
     private void carregarListaEspera() {
@@ -137,10 +118,9 @@ public class SistemaClinica {
 
     public void cadastrarPaciente(String nome, int idade, String plano, String senha) {
         Paciente p = new Paciente(nome, idade, plano, senha);
-        pacientes.add(p);
-
         //teste de cadastro no DB
         pacienteDAO.cadastrarPaciente(p);
+        pacientes.add(p);
         System.out.println("Paciente cadastrado no banco de dados!");
     }
 
@@ -159,8 +139,8 @@ public class SistemaClinica {
             default:
                 return;
         }
-        medicos.add(m);
         medicoDAO.cadastrarMedico(m);
+        medicos.add(m);
     }
 
     // ==================== PESQUISA DE MÉDICOS ====================
@@ -214,9 +194,8 @@ public class SistemaClinica {
     }
 
     public void cancelarAgendamento(Agendamento agendamento) {
-        agendamentos.remove(agendamento);
         agendamentoDAO.removerAgendamento(agendamento);
-        //remover agendamento antigo do db
+        agendamentos.remove(agendamento);
 
         // Promover paciente da lista de espera
         String chave = agendamento.getMedico().getNome() + "|" + agendamento.getDataConsulta().toString();
@@ -224,9 +203,8 @@ public class SistemaClinica {
         if (fila != null && !fila.isEmpty()) {
             Paciente promovido = fila.poll();
             Agendamento novoAg = new Agendamento(agendamento.getMedico(), promovido, agendamento.getDataConsulta());
-            agendamentos.add(novoAg);
             agendamentoDAO.cadastrarAgendamento(novoAg);
-            //salvar novo agendamento no db
+            agendamentos.add(novoAg);
 
             salvarListaEspera();
         }

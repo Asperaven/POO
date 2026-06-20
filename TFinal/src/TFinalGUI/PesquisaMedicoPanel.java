@@ -190,7 +190,7 @@ public class PesquisaMedicoPanel extends JPanel {
         tabela.setSelectionBackground(MainFrame.COR_PRIMARIA.darker());
         tabela.setSelectionForeground(Color.WHITE);
         tabela.setRowHeight(36);
-        tabela.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        tabela.setFont(new Font("Segoe UI Symbol", Font.PLAIN, 14));
         tabela.setShowVerticalLines(false);
         tabela.setIntercellSpacing(new Dimension(0, 1));
 

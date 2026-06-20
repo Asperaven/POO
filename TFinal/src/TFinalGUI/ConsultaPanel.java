@@ -184,18 +184,24 @@ public class ConsultaPanel extends JPanel {
         String exames = MainFrame.getTextoOuVazio(campoExames, "Exames solicitados...");
         double valor = medico.getValorConsulta();
 
-        mainFrame.getSistema().realizarConsulta(medico, paciente, descricao, receita, exames, valor);
+        try {
+            mainFrame.getSistema().realizarConsulta(medico, paciente, descricao, receita, exames, valor);
 
-        JOptionPane.showMessageDialog(this,
-                "Consulta registrada com sucesso!",
-                "Sucesso ✅", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Consulta registrada com sucesso!",
+                    "Sucesso ✅", JOptionPane.INFORMATION_MESSAGE);
 
-        // Limpar campos
-        areaDescricao.setText("");
-        campoReceita.setText("Medicamentos prescritos...");
-        campoReceita.setForeground(MainFrame.COR_TEXTO_SECUNDARIO);
-        campoExames.setText("Exames solicitados...");
-        campoExames.setForeground(MainFrame.COR_TEXTO_SECUNDARIO);
-        atualizar();
+            // Limpar campos
+            areaDescricao.setText("");
+            campoReceita.setText("Medicamentos prescritos...");
+            campoReceita.setForeground(MainFrame.COR_TEXTO_SECUNDARIO);
+            campoExames.setText("Exames solicitados...");
+            campoExames.setForeground(MainFrame.COR_TEXTO_SECUNDARIO);
+            atualizar();
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao registrar consulta no banco de dados: " + ex.getMessage(),
+                    "Erro no Banco de Dados", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

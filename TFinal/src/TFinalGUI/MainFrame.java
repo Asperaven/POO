@@ -2,8 +2,8 @@ package TFinalGUI;
 
 import TFinalClasses.*;
 import java.awt.*;
-import javax.swing.*;
 import java.io.File;
+import javax.swing.*;
 
 public class MainFrame extends JFrame {
 
@@ -45,6 +45,26 @@ public class MainFrame extends JFrame {
     private EstatisticasPanel estatisticasPanel;
 
     public MainFrame() {
+        // Personalização global de diálogos (JOptionPane) para o tema escuro
+        UIManager.put("OptionPane.background", COR_PAINEL);
+        UIManager.put("Panel.background", COR_PAINEL);
+        UIManager.put("OptionPane.messageForeground", COR_TEXTO);
+        UIManager.put(
+            "OptionPane.messageFont",
+            new Font("Segoe UI", Font.PLAIN, 14)
+        );
+        UIManager.put("Button.background", COR_CARD);
+        UIManager.put("Button.foreground", Color.WHITE);
+        UIManager.put("Button.font", new Font("Segoe UI", Font.BOLD, 12));
+        UIManager.put("Button.focus", new Color(0, 0, 0, 0)); // Remove a borda de foco tracejada nos botões
+        UIManager.put(
+            "Button.border",
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(COR_BORDA, 1),
+                BorderFactory.createEmptyBorder(6, 16, 6, 16)
+            )
+        );
+
         String path = "src/TFinalArquivos";
         if (!new File(path).exists()) {
             path = "TFinal/src/TFinalArquivos";
@@ -146,12 +166,22 @@ public class MainFrame extends JFrame {
 
     public static String obterFonteParaTexto(String texto) {
         if (texto != null) {
-            for (int i = 0; i < texto.length();) {
+            boolean temEstrela = false;
+            boolean temEmoji = false;
+            for (int i = 0; i < texto.length(); ) {
                 int cp = texto.codePointAt(i);
-                if (cp > 0x2000) {
-                    return "Segoe UI Emoji";
+                if (cp == 0x2605 || cp == 0x2606) {
+                    temEstrela = true;
+                } else if (cp > 0x2000) {
+                    temEmoji = true;
                 }
                 i += Character.charCount(cp);
+            }
+            if (temEstrela) {
+                return "Segoe UI Symbol";
+            }
+            if (temEmoji) {
+                return "Segoe UI Emoji";
             }
         }
         return "Segoe UI";
@@ -170,15 +200,16 @@ public class MainFrame extends JFrame {
 
         Color corHover = corFundo.brighter();
         botao.addMouseListener(
-                new java.awt.event.MouseAdapter() {
-                    public void mouseEntered(java.awt.event.MouseEvent evt) {
-                        botao.setBackground(corHover);
-                    }
+            new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    botao.setBackground(corHover);
+                }
 
-                    public void mouseExited(java.awt.event.MouseEvent evt) {
-                        botao.setBackground(corFundo);
-                    }
-                });
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    botao.setBackground(corFundo);
+                }
+            }
+        );
         return botao;
     }
 
@@ -188,30 +219,33 @@ public class MainFrame extends JFrame {
         campo.setForeground(COR_TEXTO);
         campo.setCaretColor(COR_TEXTO);
         campo.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(COR_BORDA, 1),
-                        BorderFactory.createEmptyBorder(8, 12, 8, 12)));
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(COR_BORDA, 1),
+                BorderFactory.createEmptyBorder(8, 12, 8, 12)
+            )
+        );
         campo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         campo.setPreferredSize(new Dimension(300, 40));
 
         campo.setText(placeholder);
         campo.setForeground(COR_TEXTO_SECUNDARIO);
         campo.addFocusListener(
-                new java.awt.event.FocusAdapter() {
-                    public void focusGained(java.awt.event.FocusEvent e) {
-                        if (campo.getText().equals(placeholder)) {
-                            campo.setText("");
-                            campo.setForeground(COR_TEXTO);
-                        }
+            new java.awt.event.FocusAdapter() {
+                public void focusGained(java.awt.event.FocusEvent e) {
+                    if (campo.getText().equals(placeholder)) {
+                        campo.setText("");
+                        campo.setForeground(COR_TEXTO);
                     }
+                }
 
-                    public void focusLost(java.awt.event.FocusEvent e) {
-                        if (campo.getText().isEmpty()) {
-                            campo.setText(placeholder);
-                            campo.setForeground(COR_TEXTO_SECUNDARIO);
-                        }
+                public void focusLost(java.awt.event.FocusEvent e) {
+                    if (campo.getText().isEmpty()) {
+                        campo.setText(placeholder);
+                        campo.setForeground(COR_TEXTO_SECUNDARIO);
                     }
-                });
+                }
+            }
+        );
         return campo;
     }
 
@@ -221,46 +255,54 @@ public class MainFrame extends JFrame {
         campo.setForeground(COR_TEXTO);
         campo.setCaretColor(COR_TEXTO);
         campo.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(COR_BORDA, 1),
-                        BorderFactory.createEmptyBorder(8, 12, 8, 12)));
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(COR_BORDA, 1),
+                BorderFactory.createEmptyBorder(8, 12, 8, 12)
+            )
+        );
         campo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         campo.setPreferredSize(new Dimension(300, 40));
         campo.setEchoChar((char) 0);
         campo.setText(placeholder);
         campo.setForeground(COR_TEXTO_SECUNDARIO);
         campo.addFocusListener(
-                new java.awt.event.FocusAdapter() {
-                    public void focusGained(java.awt.event.FocusEvent e) {
-                        if (String.valueOf(campo.getPassword()).equals(placeholder)) {
-                            campo.setText("");
-                            campo.setForeground(COR_TEXTO);
-                            campo.setEchoChar('●');
-                        }
+            new java.awt.event.FocusAdapter() {
+                public void focusGained(java.awt.event.FocusEvent e) {
+                    if (
+                        String.valueOf(campo.getPassword()).equals(placeholder)
+                    ) {
+                        campo.setText("");
+                        campo.setForeground(COR_TEXTO);
+                        campo.setEchoChar('●');
                     }
+                }
 
-                    public void focusLost(java.awt.event.FocusEvent e) {
-                        if (campo.getPassword().length == 0) {
-                            campo.setEchoChar((char) 0);
-                            campo.setText(placeholder);
-                            campo.setForeground(COR_TEXTO_SECUNDARIO);
-                        }
+                public void focusLost(java.awt.event.FocusEvent e) {
+                    if (campo.getPassword().length == 0) {
+                        campo.setEchoChar((char) 0);
+                        campo.setText(placeholder);
+                        campo.setForeground(COR_TEXTO_SECUNDARIO);
                     }
-                });
+                }
+            }
+        );
         return campo;
     }
 
     public static JLabel criarLabel(
-            String texto,
-            int tamanho,
-            boolean negrito) {
+        String texto,
+        int tamanho,
+        boolean negrito
+    ) {
         JLabel label = new JLabel(texto);
         label.setForeground(COR_TEXTO);
         label.setFont(
-                new Font(
-                        obterFonteParaTexto(texto),
-                        negrito ? Font.BOLD : Font.PLAIN,
-                        tamanho));
+            new Font(
+                obterFonteParaTexto(texto),
+                negrito ? Font.BOLD : Font.PLAIN,
+                tamanho
+            )
+        );
         return label;
     }
 
@@ -268,9 +310,11 @@ public class MainFrame extends JFrame {
         JPanel painel = new JPanel();
         painel.setBackground(COR_PAINEL);
         painel.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(COR_BORDA, 1),
-                        BorderFactory.createEmptyBorder(20, 20, 20, 20)));
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(COR_BORDA, 1),
+                BorderFactory.createEmptyBorder(20, 20, 20, 20)
+            )
+        );
         return painel;
     }
 
@@ -288,8 +332,7 @@ public class MainFrame extends JFrame {
 
     public static String getTextoOuVazio(JTextField campo, String placeholder) {
         String texto = campo.getText().trim();
-        if (texto.equals(placeholder))
-            return "";
+        if (texto.equals(placeholder)) return "";
         return texto;
     }
 }

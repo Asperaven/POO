@@ -1,14 +1,10 @@
 package TFinalClasses;
 
 import TFinalExcecoes.PlanoInvalidoException;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 public abstract class Medico {
+
     private String nome;
     private String especialidade;
     private double valorConsulta;
@@ -16,7 +12,12 @@ public abstract class Medico {
     private ArrayList<Avaliacao> avalicoes;
     private ArrayList<String> planosDeSaude;
 
-    public Medico(String nome, String especialidade, double valorConsulta, String senha) {
+    public Medico(
+        String nome,
+        String especialidade,
+        double valorConsulta,
+        String senha
+    ) {
         this.nome = nome;
         this.especialidade = especialidade;
         this.valorConsulta = valorConsulta;

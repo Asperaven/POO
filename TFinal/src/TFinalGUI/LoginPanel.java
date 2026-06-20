@@ -189,7 +189,7 @@ public class LoginPanel extends JPanel {
                 for (Agendamento ag : ags) {
                     if (ag.getDataConsulta().equals(hoje)) {
                         JOptionPane.showMessageDialog(mainFrame,
-                                "Você tem uma consulta agendada para hoje com o(a) " + ag.getMedico().getNome() + "!",
+                                "Você tem uma consulta agendada para hoje com " + ag.getMedico().getNome() + "!",
                                 "Consulta Hoje", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
@@ -229,7 +229,23 @@ public class LoginPanel extends JPanel {
                         "Idade inválida!", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            mainFrame.getSistema().cadastrarPaciente(nome, idade, plano, senha);
+            try {
+                mainFrame.getSistema().cadastrarPaciente(nome, idade, plano, senha);
+            } catch (RuntimeException ex) {
+                String msg = ex.getMessage();
+                if (msg != null && (msg.contains("UNIQUE") || msg.contains("PRIMARY KEY")
+                        || msg.contains("constraint failed"))) {
+                    JOptionPane.showMessageDialog(this,
+                            "Erro: nome de usuário já cadastrado!",
+                            "Erro de Cadastro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Erro ao cadastrar paciente no banco de dados: "
+                                    + (msg != null ? msg : "erro desconhecido"),
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                return;
+            }
         } else {
             String especialidade = (String) comboEspecialidade.getSelectedItem();
             String valorStr = MainFrame.getTextoOuVazio(campoValor, "Valor da consulta");
@@ -241,7 +257,22 @@ public class LoginPanel extends JPanel {
                         "Valor inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            mainFrame.getSistema().cadastrarMedico(nome, valor, senha, especialidade);
+            try {
+                mainFrame.getSistema().cadastrarMedico(nome, valor, senha, especialidade);
+            } catch (RuntimeException ex) {
+                String msg = ex.getMessage();
+                if (msg != null && (msg.contains("UNIQUE") || msg.contains("PRIMARY KEY")
+                        || msg.contains("constraint failed"))) {
+                    JOptionPane.showMessageDialog(this,
+                            "Erro: nome de usuário já cadastrado!",
+                            "Erro de Cadastro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Erro ao cadastrar médico no banco de dados: " + (msg != null ? msg : "erro desconhecido"),
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                return;
+            }
         }
 
         JOptionPane.showMessageDialog(this,
