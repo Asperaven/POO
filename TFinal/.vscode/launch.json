@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "TFinal_89f855a4"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "TFinal",
+            "args": "",
+            "vmArgs": "--enable-native-access=ALL-UNNAMED"
+        }
+    ]
+}

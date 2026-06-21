@@ -2,6 +2,7 @@ package TFinalGUI;
 
 import TFinalClasses.*;
 import TFinalExcecoes.AgendaLotadaException;
+import TFinalExcecoes.PlanoInvalidoException;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -200,6 +201,13 @@ public class AgendamentoPanel extends JPanel {
                 JOptionPane.INFORMATION_MESSAGE
             );
             atualizar();
+        } catch (PlanoInvalidoException ex) {
+            JOptionPane.showMessageDialog(
+                this,
+                ex.getMessage(),
+                "Plano Inválido",
+                JOptionPane.ERROR_MESSAGE
+            );
         } catch (AgendaLotadaException ex) {
             int opcao = JOptionPane.showConfirmDialog(
                 this,

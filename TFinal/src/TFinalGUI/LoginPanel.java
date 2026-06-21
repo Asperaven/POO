@@ -193,6 +193,12 @@ public class LoginPanel extends JPanel {
                                 "Consulta Hoje", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
+                if (mainFrame.getSistema().isPacientePromovido(paciente.getNome())) {
+                    JOptionPane.showMessageDialog(mainFrame,
+                            "Parabéns! Você foi promovido da lista de espera e agora tem uma consulta agendada!",
+                            "Promovido da Lista de Espera", JOptionPane.INFORMATION_MESSAGE);
+                    mainFrame.getSistema().limparNotificacaoPromovido(paciente.getNome());
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this,

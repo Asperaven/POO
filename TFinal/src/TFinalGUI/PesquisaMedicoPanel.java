@@ -25,7 +25,7 @@ public class PesquisaMedicoPanel extends JPanel {
 
     private void criarInterface() {
         // Header
-        JPanel header = criarHeader("🔍 Pesquisar Médicos");
+        JPanel header = criarHeaderComVoltar("🔍 Pesquisar Médicos", mainFrame);
         add(header, BorderLayout.NORTH);
 
         // Painel central

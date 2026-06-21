@@ -8,9 +8,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 public class SistemaClinica {
     private ArrayList<Medico> medicos;
@@ -19,6 +21,7 @@ public class SistemaClinica {
     private ArrayList<Consulta> consultas;
     // Chave: "nomeMedico|data" -> fila de pacientes em espera
     private Map<String, Queue<Paciente>> listasEspera;
+    private Set<String> pacientesPromovidos;
 
     private String basePath;
 
@@ -34,7 +37,8 @@ public class SistemaClinica {
         this.pacientes = new ArrayList<>();
         this.agendamentos = new ArrayList<>();
         this.consultas = new ArrayList<>();
-        this.listasEspera = new HashMap<>();
+        this.        listasEspera = new HashMap<>();
+        pacientesPromovidos = new HashSet<>();
         carregarDados();
         criarDadosIniciais();
     }
@@ -170,8 +174,12 @@ public class SistemaClinica {
     // ==================== AGENDAMENTO ====================
 
     public void agendarConsulta(Medico medico, Paciente paciente, LocalDate data)
-            throws AgendaLotadaException {
-        // Contar agendamentos existentes para este médico nesta data
+            throws AgendaLotadaException, PlanoInvalidoException {
+        if (!medico.planoValido(paciente.getPlanoSaude())) {
+            throw new PlanoInvalidoException(
+                "Plano" + paciente.getPlanoSaude() + " não é aceito por " + medico.getNome()
+            );
+        }
         int contagem = 0;
         for (Agendamento ag : agendamentos) {
             if (ag.getMedico().getNome().equals(medico.getNome())
@@ -205,6 +213,7 @@ public class SistemaClinica {
             Agendamento novoAg = new Agendamento(agendamento.getMedico(), promovido, agendamento.getDataConsulta());
             agendamentoDAO.cadastrarAgendamento(novoAg);
             agendamentos.add(novoAg);
+            pacientesPromovidos.add(promovido.getNome());
 
             salvarListaEspera();
         }
@@ -392,6 +401,14 @@ public class SistemaClinica {
     public Queue<Paciente> getListaEspera(Medico medico, LocalDate data) {
         String chave = medico.getNome() + "|" + data.toString();
         return listasEspera.getOrDefault(chave, new LinkedList<>());
+    }
+
+    public boolean isPacientePromovido(String nomePaciente) {
+        return pacientesPromovidos.contains(nomePaciente);
+    }
+
+    public void limparNotificacaoPromovido(String nomePaciente) {
+        pacientesPromovidos.remove(nomePaciente);
     }
 
     // ==================== SEED DATA ====================
