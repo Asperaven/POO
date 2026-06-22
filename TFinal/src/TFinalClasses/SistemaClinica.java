@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -22,6 +23,7 @@ public class SistemaClinica {
     // Chave: "nomeMedico|data" -> fila de pacientes em espera
     private Map<String, Queue<Paciente>> listasEspera;
     private Set<String> pacientesPromovidos;
+    private Map<String, List<String>> notificacoesPacientes;
 
     private String basePath;
 
@@ -37,8 +39,9 @@ public class SistemaClinica {
         this.pacientes = new ArrayList<>();
         this.agendamentos = new ArrayList<>();
         this.consultas = new ArrayList<>();
-        this.        listasEspera = new HashMap<>();
+        this.listasEspera = new HashMap<>();
         pacientesPromovidos = new HashSet<>();
+        this.notificacoesPacientes = new HashMap<>();
         carregarDados();
         criarDadosIniciais();
     }
@@ -174,10 +177,10 @@ public class SistemaClinica {
     // ==================== AGENDAMENTO ====================
 
     public void agendarConsulta(Medico medico, Paciente paciente, LocalDate data)
-            throws AgendaLotadaException, PlanoInvalidoException {
+            throws AgendaLotadaException, PlanoInvalidoException, SaldoInsuficienteException {
         if (!medico.planoValido(paciente.getPlanoSaude())) {
             throw new PlanoInvalidoException(
-                "Plano" + paciente.getPlanoSaude() + " não é aceito por " + medico.getNome()
+                "Plano " + paciente.getPlanoSaude() + " não é aceito por " + medico.getNome()
             );
         }
         int contagem = 0;
@@ -190,9 +193,19 @@ public class SistemaClinica {
         if (contagem >= medico.getPacientesPorDia()) {
             throw new AgendaLotadaException(medico.getNome(), data.toString());
         }
+        if (paciente.getPlanoSaude() == null || paciente.getPlanoSaude().isEmpty()) {
+            double valor = medico.getValorConsulta();
+            if (paciente.getCreditos() < valor) {
+                throw new SaldoInsuficienteException(
+                    "Créditos insuficientes. Necessário: R$ " + String.format("%.2f", valor) +
+                    ", Saldo: R$ " + String.format("%.2f", paciente.getCreditos())
+                );
+            }
+        }
         Agendamento ag = new Agendamento(medico, paciente, data);
         agendamentoDAO.cadastrarAgendamento(ag);
         agendamentos.add(ag);
+        debitarCredito(medico, paciente);
     }
 
     public void entrarListaEspera(Medico medico, Paciente paciente, LocalDate data) {
@@ -202,6 +215,16 @@ public class SistemaClinica {
     }
 
     public void cancelarAgendamento(Agendamento agendamento) {
+        cancelarAgendamento(agendamento, true);
+    }
+
+    public void cancelarAgendamento(Agendamento agendamento, boolean reembolsar) {
+        if (reembolsar) {
+            Paciente pacienteCancelado = agendamento.getPaciente();
+            Medico medicoCancelado = agendamento.getMedico();
+            reembolsarCredito(medicoCancelado, pacienteCancelado);
+        }
+
         agendamentoDAO.removerAgendamento(agendamento);
         agendamentos.remove(agendamento);
 
@@ -214,8 +237,152 @@ public class SistemaClinica {
             agendamentoDAO.cadastrarAgendamento(novoAg);
             agendamentos.add(novoAg);
             pacientesPromovidos.add(promovido.getNome());
-
+            debitarCredito(agendamento.getMedico(), promovido);
             salvarListaEspera();
+        }
+    }
+
+    public void adicionarNotificacao(String nomePaciente, String mensagem) {
+        notificacoesPacientes
+            .computeIfAbsent(nomePaciente, k -> new java.util.ArrayList<>())
+            .add(mensagem);
+    }
+
+    public List<String> getNotificacoes(String nomePaciente) {
+        return notificacoesPacientes.getOrDefault(nomePaciente, new java.util.ArrayList<>());
+    }
+
+    public void limparNotificacoes(String nomePaciente) {
+        notificacoesPacientes.remove(nomePaciente);
+    }
+
+    private void debitarCredito(Medico medico, Paciente paciente) {
+        if (paciente.getPlanoSaude() == null || paciente.getPlanoSaude().isEmpty()) {
+            double valor = medico.getValorConsulta();
+            paciente.setCreditos(paciente.getCreditos() - valor);
+            pacienteDAO.atualizarCreditos(paciente.getNome(), paciente.getCreditos());
+        }
+    }
+
+    private void reembolsarCredito(Medico medico, Paciente paciente) {
+        if (paciente.getPlanoSaude() == null || paciente.getPlanoSaude().isEmpty()) {
+            double valor = medico.getValorConsulta();
+            paciente.setCreditos(paciente.getCreditos() + valor);
+            pacienteDAO.atualizarCreditos(paciente.getNome(), paciente.getCreditos());
+        }
+    }
+
+    public void alterarSenha(String nome, String senhaAtual, String senhaNova) {
+        if (login(nome, senhaAtual) == null) {
+            throw new RuntimeException("Senha atual incorreta.");
+        }
+        Medico m = buscarMedicoPorNome(nome);
+        if (m != null) {
+            m.setSenha(senhaNova);
+            medicoDAO.atualizarSenha(nome, senhaNova);
+        } else {
+            Paciente p = buscarPacientePorNome(nome);
+            if (p != null) {
+                p.setSenha(senhaNova);
+                pacienteDAO.atualizarSenha(nome, senhaNova);
+            }
+        }
+    }
+
+    public void deletarConta(String nome, String senhaAtual) {
+        if (login(nome, senhaAtual) == null) {
+            throw new RuntimeException("Senha atual incorreta.");
+        }
+        Medico m = buscarMedicoPorNome(nome);
+        if (m != null) {
+            for (Agendamento ag : new ArrayList<>(agendamentos)) {
+                if (ag.getMedico().getNome().equalsIgnoreCase(nome)) {
+                    agendamentoDAO.removerAgendamento(ag);
+                    adicionarNotificacao(
+                        ag.getPaciente().getNome(),
+                        "Um dos seus agendamentos foi cancelado por indisponibilidade. Verifique aba de agendamentos."
+                    );
+                }
+            }
+            agendamentos.removeIf(ag -> ag.getMedico().getNome().equalsIgnoreCase(nome));
+            for (Consulta c : new ArrayList<>(consultas)) {
+                if (c.getMedico().getNome().equalsIgnoreCase(nome)) {
+                    consultaDAO.removerConsulta(c);
+                }
+            }
+            consultas.removeIf(c -> c.getMedico().getNome().equalsIgnoreCase(nome));
+            m.getAvalicoes().clear();
+            avaliacaoDAO.deletarAvaliacoesPorMedico(nome);
+            medicoDAO.deletarMedico(nome);
+            medicos.remove(m);
+        } else {
+            Paciente p = buscarPacientePorNome(nome);
+            if (p != null) {
+                for (Agendamento ag : new ArrayList<>(agendamentos)) {
+                    if (ag.getPaciente().getNome().equalsIgnoreCase(nome)) {
+                        agendamentoDAO.removerAgendamento(ag);
+                    }
+                }
+                agendamentos.removeIf(ag -> ag.getPaciente().getNome().equalsIgnoreCase(nome));
+                for (Consulta c : new ArrayList<>(consultas)) {
+                    if (c.getPaciente().getNome().equalsIgnoreCase(nome)) {
+                        consultaDAO.removerConsulta(c);
+                    }
+                }
+                consultas.removeIf(c -> c.getPaciente().getNome().equalsIgnoreCase(nome));
+                for (Medico med : medicos) {
+                    med.getAvalicoes().removeIf(av -> av.getPaciente().getNome().equalsIgnoreCase(nome));
+                }
+                avaliacaoDAO.deletarAvaliacoesPorPaciente(nome);
+                pacienteDAO.deletarPaciente(nome);
+                pacientes.remove(p);
+            }
+        }
+    }
+
+    public void alterarPlanoPaciente(String nomePaciente, String novoPlano, String senhaAtual) {
+        if (login(nomePaciente, senhaAtual) == null) {
+            throw new RuntimeException("Senha atual incorreta.");
+        }
+        Paciente p = buscarPacientePorNome(nomePaciente);
+        if (p != null) {
+            p.setPlanoSaude(novoPlano);
+            pacienteDAO.atualizarPlano(nomePaciente, novoPlano);
+
+            if (novoPlano == null || novoPlano.isEmpty()) {
+                for (Agendamento ag : new ArrayList<>(agendamentos)) {
+                    if (ag.getPaciente().getNome().equalsIgnoreCase(nomePaciente)
+                            && ag.getMedico() instanceof MedicoDermatologista) {
+                        cancelarAgendamento(ag, false);
+                        adicionarNotificacao(
+                            nomePaciente,
+                            "Um dos seus agendamentos foi cancelado por indisponibilidade. Verifique aba de agendamentos."
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    public void adicionarCreditos(String nomePaciente, double valor, String senhaAtual) {
+        if (login(nomePaciente, senhaAtual) == null) {
+            throw new RuntimeException("Senha atual incorreta.");
+        }
+        Paciente p = buscarPacientePorNome(nomePaciente);
+        if (p != null) {
+            p.setCreditos(p.getCreditos() + valor);
+            pacienteDAO.atualizarCreditos(nomePaciente, p.getCreditos());
+        }
+    }
+
+    public void alterarEspecialidadeMedico(String nomeMedico, String novaEspecialidade, String senhaAtual) {
+        if (login(nomeMedico, senhaAtual) == null) {
+            throw new RuntimeException("Senha atual incorreta.");
+        }
+        Medico m = buscarMedicoPorNome(nomeMedico);
+        if (m != null) {
+            m.setEspecialidade(novaEspecialidade);
+            medicoDAO.atualizarEspecialidade(nomeMedico, novaEspecialidade);
         }
     }
 
@@ -259,6 +426,8 @@ public class SistemaClinica {
 
         // Se paciente tem plano, não paga
         if (paciente.getPlanoSaude() != null && !paciente.getPlanoSaude().isEmpty()) {
+            valor = 0;
+        } else {
             valor = 0;
         }
 

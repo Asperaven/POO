@@ -63,7 +63,7 @@ public class DashboardPanel extends JPanel {
     }
 
     private void criarMenuPaciente() {
-        JPanel grid = new JPanel(new GridLayout(2, 2, 20, 20));
+        JPanel grid = new JPanel(new GridLayout(3, 2, 20, 20));
         grid.setBackground(MainFrame.COR_FUNDO);
         grid.setBorder(BorderFactory.createEmptyBorder(30, 60, 30, 60));
 
@@ -87,6 +87,16 @@ public class DashboardPanel extends JPanel {
                 new Color(250, 204, 21),
                 () -> mainFrame.mostrarTela(MainFrame.AVALIACAO)));
 
+        grid.add(criarCardMenu("⚙️", "Minha Conta",
+                "Altere senha, plano, créditos ou exclua sua conta",
+                MainFrame.COR_TEXTO_SECUNDARIO,
+                () -> mainFrame.mostrarTela(MainFrame.CONTA)));
+
+        grid.add(criarCardMenu("📊", "Estatísticas",
+                "Veja as estatísticas do sistema",
+                new Color(168, 85, 247),
+                () -> mainFrame.mostrarTela(MainFrame.ESTATISTICAS)));
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1;
@@ -95,7 +105,7 @@ public class DashboardPanel extends JPanel {
     }
 
     private void criarMenuMedico() {
-        JPanel grid = new JPanel(new GridLayout(2, 2, 20, 20));
+        JPanel grid = new JPanel(new GridLayout(3, 2, 20, 20));
         grid.setBackground(MainFrame.COR_FUNDO);
         grid.setBorder(BorderFactory.createEmptyBorder(30, 60, 30, 60));
 
@@ -118,6 +128,11 @@ public class DashboardPanel extends JPanel {
                 "Veja as estatísticas do sistema",
                 MainFrame.COR_SECUNDARIA,
                 () -> mainFrame.mostrarTela(MainFrame.ESTATISTICAS)));
+
+        grid.add(criarCardMenu("⚙️", "Minha Conta",
+                "Altere senha, especialidade ou exclua sua conta",
+                MainFrame.COR_TEXTO_SECUNDARIO,
+                () -> mainFrame.mostrarTela(MainFrame.CONTA)));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;

@@ -39,7 +39,7 @@ public class DBConnection {
     public static void criarTabelas(Connection conexao) {
         String sqlPacientes =
             "CREATE TABLE IF NOT EXISTS pacientes (" +
-            "nome TEXT PRIMARY KEY, idade INTEGER, planoSaude TEXT, senha TEXT);";
+            "nome TEXT PRIMARY KEY, idade INTEGER, planoSaude TEXT, senha TEXT, creditos REAL DEFAULT 0.0);";
 
         String sqlMedicos =
             "CREATE TABLE IF NOT EXISTS medicos (" +

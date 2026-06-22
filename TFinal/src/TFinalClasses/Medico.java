@@ -50,6 +50,14 @@ public abstract class Medico {
         return valorConsulta;
     }
 
+    public void setValorConsulta(double valorConsulta) {
+        this.valorConsulta = valorConsulta;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+
     public ArrayList<Avaliacao> getAvalicoes() {
         return avalicoes;
     }
@@ -79,5 +87,9 @@ public abstract class Medico {
 
     public String getSenha() {
         return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

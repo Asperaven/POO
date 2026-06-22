@@ -8,6 +8,7 @@ public class Paciente {
     private int idade;
     private String planoSaude;
     private String senha;
+    private double creditos;
     private ArrayList<Consulta> historico;
 
     public String getNome() {
@@ -46,11 +47,24 @@ public class Paciente {
         return senha;
     }
 
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public double getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(double creditos) {
+        this.creditos = creditos;
+    }
+
     public Paciente(String nome, int idade, String planoSaude, String senha) {
         this.nome = nome;
         this.idade = idade;
         this.planoSaude = planoSaude;
         this.senha = senha;
+        this.creditos = 0.0;
         this.historico = new ArrayList<>();
     }
 

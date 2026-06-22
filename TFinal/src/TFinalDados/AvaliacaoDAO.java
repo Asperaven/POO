@@ -66,4 +66,26 @@ public class AvaliacaoDAO {
         }
         return listaAvaliacoes;
     }
+
+    public void deletarAvaliacoesPorPaciente(String nomePaciente) {
+        String sql = "DELETE FROM avaliacoes WHERE paciente = ?";
+        try (Connection conexao = DBConnection.getConnection();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+            statement.setString(1, nomePaciente);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar avaliações: " + e.getMessage());
+        }
+    }
+
+    public void deletarAvaliacoesPorMedico(String nomeMedico) {
+        String sql = "DELETE FROM avaliacoes WHERE medico = ?";
+        try (Connection conexao = DBConnection.getConnection();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+            statement.setString(1, nomeMedico);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar avaliações: " + e.getMessage());
+        }
+    }
 }

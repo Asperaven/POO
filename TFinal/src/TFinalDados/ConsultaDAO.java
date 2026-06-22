@@ -88,4 +88,17 @@ public class ConsultaDAO {
         }
         return listaConsultas;
     }
+
+    public void removerConsulta(Consulta consulta) {
+        String sql = "DELETE FROM consultas WHERE medico = ? AND paciente = ? AND data = ?";
+        try (Connection conexao = DBConnection.getConnection();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+            statement.setString(1, consulta.getMedico().getNome());
+            statement.setString(2, consulta.getPaciente().getNome());
+            statement.setString(3, consulta.getData());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao remover consulta: " + e.getMessage());
+        }
+    }
 }

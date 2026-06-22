@@ -82,4 +82,39 @@ public class MedicoDAO {
         }
         return listaMedicos;
     }
+
+    public void atualizarSenha(String nome, String senha) {
+        String sql = "UPDATE medicos SET senha = ? WHERE nome = ?";
+        try (Connection conexao = DBConnection.getConnection();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+            statement.setString(1, senha);
+            statement.setString(2, nome);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar senha: " + e.getMessage());
+        }
+    }
+
+    public void atualizarEspecialidade(String nome, String especialidade) {
+        String sql = "UPDATE medicos SET especialidade = ? WHERE nome = ?";
+        try (Connection conexao = DBConnection.getConnection();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+            statement.setString(1, especialidade);
+            statement.setString(2, nome);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar especialidade: " + e.getMessage());
+        }
+    }
+
+    public void deletarMedico(String nome) {
+        String sql = "DELETE FROM medicos WHERE nome = ?";
+        try (Connection conexao = DBConnection.getConnection();
+             PreparedStatement statement = conexao.prepareStatement(sql)) {
+            statement.setString(1, nome);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar médico: " + e.getMessage());
+        }
+    }
 }

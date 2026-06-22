@@ -3,6 +3,7 @@ package TFinalGUI;
 import TFinalClasses.*;
 import TFinalExcecoes.AgendaLotadaException;
 import TFinalExcecoes.PlanoInvalidoException;
+import TFinalExcecoes.SaldoInsuficienteException;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -206,6 +207,13 @@ public class AgendamentoPanel extends JPanel {
                 this,
                 ex.getMessage(),
                 "Plano Inválido",
+                JOptionPane.ERROR_MESSAGE
+            );
+        } catch (SaldoInsuficienteException ex) {
+            JOptionPane.showMessageDialog(
+                this,
+                ex.getMessage(),
+                "Saldo Insuficiente",
                 JOptionPane.ERROR_MESSAGE
             );
         } catch (AgendaLotadaException ex) {

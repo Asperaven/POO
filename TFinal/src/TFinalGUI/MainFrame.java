@@ -21,6 +21,7 @@ public class MainFrame extends JFrame {
     public static final String AVALIACAO = "AVALIACAO";
     public static final String HISTORICO = "HISTORICO";
     public static final String ESTATISTICAS = "ESTATISTICAS";
+    public static final String CONTA = "CONTA";
 
     // Cores do tema
     public static final Color COR_FUNDO = new Color(15, 23, 42);
@@ -43,6 +44,7 @@ public class MainFrame extends JFrame {
     private AvaliacaoPanel avaliacaoPanel;
     private HistoricoPanel historicoPanel;
     private EstatisticasPanel estatisticasPanel;
+    private ContaPanel contaPanel;
 
     public MainFrame() {
         // Personalização global de diálogos (JOptionPane) para o tema escuro
@@ -101,6 +103,7 @@ public class MainFrame extends JFrame {
         avaliacaoPanel = new AvaliacaoPanel(this);
         historicoPanel = new HistoricoPanel(this);
         estatisticasPanel = new EstatisticasPanel(this);
+        contaPanel = new ContaPanel(this);
 
         mainPanel.add(loginPanel, LOGIN);
         mainPanel.add(dashboardPanel, DASHBOARD);
@@ -110,6 +113,7 @@ public class MainFrame extends JFrame {
         mainPanel.add(avaliacaoPanel, AVALIACAO);
         mainPanel.add(historicoPanel, HISTORICO);
         mainPanel.add(estatisticasPanel, ESTATISTICAS);
+        mainPanel.add(contaPanel, CONTA);
     }
 
     public void mostrarTela(String nomeTela) {
@@ -135,6 +139,9 @@ public class MainFrame extends JFrame {
                 break;
             case ESTATISTICAS:
                 estatisticasPanel.atualizar();
+                break;
+            case CONTA:
+                contaPanel.atualizar();
                 break;
         }
         cardLayout.show(mainPanel, nomeTela);

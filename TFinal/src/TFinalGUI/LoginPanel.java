@@ -199,6 +199,13 @@ public class LoginPanel extends JPanel {
                             "Promovido da Lista de Espera", JOptionPane.INFORMATION_MESSAGE);
                     mainFrame.getSistema().limparNotificacaoPromovido(paciente.getNome());
                 }
+                java.util.List<String> notificacoes = mainFrame.getSistema().getNotificacoes(paciente.getNome());
+                for (String msg : notificacoes) {
+                    JOptionPane.showMessageDialog(mainFrame, msg, "Notificação", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (!notificacoes.isEmpty()) {
+                    mainFrame.getSistema().limparNotificacoes(paciente.getNome());
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this,
